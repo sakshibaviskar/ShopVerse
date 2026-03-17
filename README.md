@@ -121,12 +121,7 @@ Feel free to **fork**, improve, and create a pull request 🚀
 
 ---
 
-## 🔥 Bonus (Make it Viral 😍)
 
-Add this banner image at top (optional):
-
-```md
-![Banner](https://via.placeholder.com/1200x300.png?text=ShopVerse+Ecommerce+UI)
 ```
 
 ---
