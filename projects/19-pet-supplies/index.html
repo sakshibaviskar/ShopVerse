@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PawMart - Pet Supplies</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    background:#fffaf5;
+}
+
+header{
+    background:#ff7043;
+    color:white;
+    padding:15px;
+    text-align:center;
+    font-size:24px;
+    font-weight:bold;
+}
+
+nav{
+    display:flex;
+    justify-content:center;
+    gap:20px;
+    background:#ffab91;
+    padding:10px;
+}
+
+nav button{
+    padding:8px 15px;
+    border:none;
+    background:white;
+    border-radius:20px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.cart{
+    position:fixed;
+    top:20px;
+    right:20px;
+    background:white;
+    padding:10px 15px;
+    border-radius:20px;
+    box-shadow:0 4px 8px rgba(0,0,0,0.2);
+    font-weight:bold;
+}
+
+.container{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:20px;
+    padding:20px;
+}
+
+.card{
+    background:white;
+    border-radius:12px;
+    overflow:hidden;
+    box-shadow:0 4px 10px rgba(0,0,0,0.1);
+    transition:0.3s;
+}
+
+.card:hover{
+    transform:scale(1.05);
+}
+
+.card img{
+    width:100%;
+    height:200px;
+    object-fit:cover;
+}
+
+.card-content{
+    padding:15px;
+    text-align:center;
+}
+
+.price{
+    color:#ff7043;
+    font-weight:bold;
+    margin:10px 0;
+}
+
+button.add{
+    padding:8px 12px;
+    border:none;
+    background:#ff7043;
+    color:white;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+footer{
+    background:#ff7043;
+    color:white;
+    text-align:center;
+    padding:10px;
+    margin-top:20px;
+}
+</style>
+</head>
+
+<body>
+
+<header>🐾 PawMart - Pet Supplies Store</header>
+
+<div class="cart">
+🛒 Cart: <span id="cartCount">0</span>
+</div>
+
+<nav>
+<button onclick="filterProducts('all')">All</button>
+<button onclick="filterProducts('dog')">Dogs</button>
+<button onclick="filterProducts('cat')">Cats</button>
+</nav>
+
+<div class="container" id="productContainer">
+
+<div class="card dog">
+<img src="https://images.unsplash.com/photo-1583511655857-d19b40a7a54e" alt="">
+<div class="card-content">
+<h3>Dog Food Premium</h3>
+<div class="price">₹899</div>
+<button class="add" onclick="addToCart()">Add to Cart</button>
+</div>
+</div>
+
+<div class="card cat">
+<img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba" alt="">
+<div class="card-content">
+<h3>Cat Food Pack</h3>
+<div class="price">₹799</div>
+<button class="add" onclick="addToCart()">Add to Cart</button>
+</div>
+</div>
+
+<div class="card dog">
+<img src="https://images.unsplash.com/photo-1558788353-f76d92427f16" alt="">
+<div class="card-content">
+<h3>Dog Toy Bone</h3>
+<div class="price">₹299</div>
+<button class="add" onclick="addToCart()">Add to Cart</button>
+</div>
+</div>
+
+<div class="card cat">
+<img src="https://images.unsplash.com/photo-1592194996308-7b43878e84a6" alt="">
+<div class="card-content">
+<h3>Cat Scratcher</h3>
+<div class="price">₹499</div>
+<button class="add" onclick="addToCart()">Add to Cart</button>
+</div>
+</div>
+
+</div>
+
+<footer>
+© 2026 PawMart | Happy Pets 🐶🐱
+</footer>
+
+<script>
+let cart = 0;
+
+function addToCart(){
+cart++;
+document.getElementById("cartCount").innerText = cart;
+}
+
+function filterProducts(category){
+let cards = document.querySelectorAll(".card");
+
+cards.forEach(card=>{
+if(category === "all"){
+card.style.display="block";
+}
+else{
+if(card.classList.contains(category)){
+card.style.display="block";
+}else{
+card.style.display="none";
+}
+}
+});
+}
+</script>
+
+</body>
+</html>

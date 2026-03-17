@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Happy Birthday, Prachu — Landing</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;600;700&family=Comfortaa:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+  <style>
+    :root{--dark-pink:#d81b60;--baby-pink:#ffb3d9;--cream:#fff9e6;--peach:#ffc9b3}
+    body{font-family:'Fredoka',system-ui;background:linear-gradient(135deg,#ffb3d9 0%,#e91e63 50%,#f06292 100%);color:#333}
+    .title-font{font-family:'Comfortaa',cursive;font-weight:700}
+    .hand-font{font-family:'Comfortaa',cursive}
+    .float-btn{animation:float 3s ease-in-out infinite}
+    @keyframes float{0%{transform:translateY(0)}50%{transform:translateY(-10px)}100%{transform:translateY(0)}}
+    .birthday-name{letter-spacing:8px;font-size:4.5rem;line-height:1.2;color:#fff;text-shadow:4px 4px 0px #d81b60,8px 8px 0px rgba(233,30,99,0.4)}
+    .cute-emoji{font-size:2.5rem;display:inline-block;margin:0 6px;animation:bounce 2s ease-in-out infinite}
+    @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-15px)}}
+    .subtitle-quote{font-size:1.35rem;color:#fff;font-weight:600;margin:12px 0;font-style:italic;text-shadow:2px 2px 4px rgba(216,27,96,0.6);letter-spacing:0.5px}
+    .friend-name{font-size:1.3rem;color:#fff;font-weight:700;margin:16px 0;text-shadow:2px 2px 4px rgba(216,27,96,0.5)}
+    .next-btn{background:linear-gradient(90deg,#d81b60,#e91e63);border:2px solid #ffb3d9;color:white;padding:14px 28px;font-size:1.1rem;border-radius:50px;cursor:pointer;font-weight:700;transition:all 0.3s;box-shadow:0 8px 20px rgba(216,27,96,0.4)}
+    .next-btn:hover{transform:scale(1.08);box-shadow:0 12px 28px rgba(216,27,96,0.6)}
+    .pookie-decor{display:inline-block;font-size:2rem;margin:0 4px}
+  </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-6">
+  <div class="w-full max-w-4xl p-12 rounded-3xl shadow-2xl" style="background:linear-gradient(135deg,rgba(255,179,217,0.4),rgba(233,30,99,0.3));backdrop-filter:blur(10px);border:3px solid #ffb3d9">
+    <div class="text-center">
+      <div class="cute-emoji">🎀</div>
+      <h1 class="birthday-name">H A P P Y  B I R T H D A Y</h1>
+      <div class="cute-emoji">✨</div>
+      
+      <h2 class="birthday-name" style="font-size:3.5rem;margin-top:20px;color:#fff;text-shadow:4px 4px 0px #d81b60,8px 8px 0px rgba(233,30,99,0.4)">P R A C H U</h2>
+      
+      <div style="margin-top:30px">
+        <p class="subtitle-quote">A true friend is like a four-leaf clover 🍀</p>
+        <p class="subtitle-quote">Hard to find, and lucky to have 💚</p>
+        <p class="subtitle-quote">You're not just my friend...</p>
+        <p class="subtitle-quote">You're my blessing in disguise 💕</p>
+        <p class="subtitle-quote">Your friendship makes my life beautiful ✨</p>
+      </div>
+
+      <div class="friend-name" style="margin-top:24px;font-size:1.25rem">
+        <span class="pookie-decor">🧸</span>
+        Your Best Friend<br>
+        <span style="color:#fff;font-size:1.4rem;text-shadow:2px 2px 4px rgba(216,27,96,0.6)">Sakshi Baviskar</span>
+        <span class="pookie-decor">🧸</span>
+      </div>
+
+      <div class="mt-8 text-center" style="margin-top:32px">
+        <button class="next-btn float-btn" onclick="handleNextSurprise(event)">🎁 Next Surprise! 🎁</button>
+      </div>
+
+      <p id="countdown" class="mt-8 text-center text-sm" style="color:#fff;font-weight:600;text-shadow:1px 1px 2px rgba(216,27,96,0.5)"></p>
+    </div>
+  </div>
+
+  <script src="assets/js/site-multi.js"></script>
+  <script>
+    function handleNextSurprise(e) {
+      e.preventDefault();
+      confetti({particleCount:150, spread:160, origin:{y:0.6}});
+      tryPlayMusic();
+      setTimeout(()=> location.href = 'memory.html', 600);
+    }
+
+    startCountdown(document.getElementById('countdown'), 12, 24);
+  </script>
+</body>
+</html>

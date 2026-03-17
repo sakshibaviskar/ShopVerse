@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart - GlowCare</title>
+    <link rel="stylesheet" href="css/style.css?v=2">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header id="header" class="sticky">
+        <nav class="navbar">
+            <div class="logo">GlowCare</div>
+            <div class="hamburger" id="hamburger">
+                <div></div><div></div><div></div>
+            </div>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="shop.html">Shop</a></li>
+                <li><a href="quiz.html">Skin Quiz</a></li>
+                <li><a href="cart.html">Cart <span id="cart-count">0</span></a></li>
+                <li><a href="wishlist.html">Wishlist <span id="wish-count">0</span></a></li>
+            </ul>
+            <div class="toggle-mode">
+                <button id="mode-toggle">🌙</button>
+            </div>
+        </nav>
+    </header>
+
+    <section class="container">
+        <h2>Your Cart</h2>
+        <div id="cart-items"></div>
+        <div class="cart-total">Total: <span id="cart-total">$0.00</span></div>
+        <div class="coupon">
+            <input type="text" id="coupon" placeholder="Enter coupon code">
+            <button id="apply-coupon">Apply</button>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 GlowCare. All rights reserved.</p>
+    </footer>
+
+    <script src="js/products.js?v=2"></script>
+    <script src="js/cart.js?v=2"></script>
+    <script src="js/main.js?v=2"></script>
+    <script>
+        document.getElementById('apply-coupon').addEventListener('click',()=>{
+            const code=document.getElementById('coupon').value.trim();
+            let total=parseFloat(document.getElementById('cart-total').textContent.replace('$',''))||0;
+            if(code==='DISCOUNT10'){
+                total*=0.9;
+                document.getElementById('cart-total').textContent='$'+total.toFixed(2);
+                alert('Coupon applied!');
+            } else alert('Invalid code');
+        });
+    </script>
+</body>
+</html>

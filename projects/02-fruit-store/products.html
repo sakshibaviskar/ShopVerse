@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop - Sakshi Fruits Shop</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-icon">🍇</span>
+                <h1>Sakshi Fruits Shop</h1>
+            </div>
+            
+            <!-- Search Bar -->
+            <div class="search-container">
+                <input type="text" class="search-input" id="searchInput" placeholder="Search fruits..." onkeyup="handleSearch(event)">
+                <div class="search-suggestions" id="searchSuggestions"></div>
+            </div>
+            
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="products.html" class="active">Shop</a>
+                <a href="wishlist.html" title="Wishlist">
+                    <span>❤️ Wishlist</span>
+                    <span class="cart-badge" id="wishlistBadge">0</span>
+                </a>
+                <a href="cart.html" class="cart-link">
+                    <span>🛒 Cart</span>
+                    <span class="cart-badge" id="cartBadge">0</span>
+                </a>
+                <button class="theme-toggle" onclick="toggleDarkMode()" title="Toggle Dark Mode">🌙</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <h2>Our Products</h2>
+        <p>Fresh Fruits & Premium Dry Fruits</p>
+    </section>
+
+    <!-- Category Filter -->
+    <section class="filters-section">
+        <div class="filter-container">
+            <button class="filter-btn active" onclick="filterProducts('all')">All Products</button>
+            <button class="filter-btn" onclick="filterProducts('fresh')">Fresh Fruits</button>
+            <button class="filter-btn" onclick="filterProducts('dry')">Dry Fruits</button>
+        </div>
+    </section>
+
+    <!-- Sort Options -->
+    <section class="filters-section" style="margin-bottom: 30px;">
+        <div class="filter-container">
+            <select id="sortSelect" onchange="sortProducts(this.value)" style="padding: 10px 20px; border: 2px solid #8b5cf6; border-radius: 25px; background: white; color: #1f2937; cursor: pointer; font-weight: 600; font-family: 'Poppins', sans-serif;">
+                <option value="default">Sort By</option>
+                <option value="price-low">Price: Low to High</option>
+                <option value="price-high">Price: High to Low</option>
+                <option value="name">Name: A to Z</option>
+                <option value="popular">Most Popular</option>
+            </select>
+        </div>
+    </section>
+
+    <!-- Recently Viewed Products (if any) -->
+    <div id="recentlyViewedSection" style="display: none;">
+        <section class="featured-section">
+            <div class="section-header">
+                <h3>👀 Recently Viewed</h3>
+                <p>Products you've viewed before</p>
+            </div>
+            <div class="featured-grid" id="recentlyViewedGrid"></div>
+        </section>
+    </div>
+
+    <!-- Products Grid -->
+    <section class="products-section">
+        <div class="products-grid" id="productsGrid">
+            <!-- Products will be dynamically loaded here -->
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h5>Sakshi Fruits Shop</h5>
+                <p>Your trusted source for fresh fruits and premium dry fruits</p>
+            </div>
+            <div class="footer-section">
+                <h5>Quick Links</h5>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="products.html">Products</a></li>
+                    <li><a href="cart.html">Cart</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h5>Contact Us</h5>
+                <p>📧 sakshibaviskar2005@gmail.com</p>
+                <p>📱 +91-9850212737</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Sakshi Fruits Shop. All rights reserved. 💜</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            displayProducts('all');
+            updateCartBadge();
+        });
+    </script>
+</body>
+</html>

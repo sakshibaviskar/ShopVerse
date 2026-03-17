@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Sakshi Fruits Shop</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-icon">🍇</span>
+                <h1>Sakshi Fruits Shop</h1>
+            </div>
+            
+            <!-- Search Bar -->
+            <div class="search-container">
+                <input type="text" class="search-input" id="searchInput" placeholder="Search fruits..." onkeyup="handleSearch(event)">
+                <div class="search-suggestions" id="searchSuggestions"></div>
+            </div>
+            
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="products.html">Shop</a>
+                <a href="wishlist.html" title="Wishlist">
+                    <span>❤️ Wishlist</span>
+                    <span class="cart-badge" id="wishlistBadge">0</span>
+                </a>
+                <a href="cart.html" class="cart-link">
+                    <span>🛒 Cart</span>
+                    <span class="cart-badge" id="cartBadge">0</span>
+                </a>
+                <button class="theme-toggle" onclick="toggleDarkMode()" title="Toggle Dark Mode">🌙</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <h2>Checkout</h2>
+        <p>Complete your order</p>
+    </section>
+
+    <section class="checkout-section">
+        <!-- Progress Indicator -->
+        <div class="progress-indicator">
+            <div class="progress-step active" id="step1-indicator">
+                <span class="step-number">1</span>
+                <span class="step-label">Details</span>
+            </div>
+            <div class="progress-line"></div>
+            <div class="progress-step" id="step2-indicator">
+                <span class="step-number">2</span>
+                <span class="step-label">Summary</span>
+            </div>
+            <div class="progress-line"></div>
+            <div class="progress-step" id="step3-indicator">
+                <span class="step-number">3</span>
+                <span class="step-label">Payment</span>
+            </div>
+            <div class="progress-line"></div>
+            <div class="progress-step" id="step4-indicator">
+                <span class="step-number">4</span>
+                <span class="step-label">Confirm</span>
+            </div>
+        </div>
+
+        <div class="checkout-container">
+            <!-- Step 1: Customer Details -->
+            <div class="checkout-step active" id="step1">
+                <h3>Step 1: Customer Details</h3>
+                <form id="customerForm">
+                    <div class="form-group">
+                        <label for="fullName">Full Name *</label>
+                        <input type="text" id="fullName" required placeholder="Enter your full name">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" required placeholder="Enter your email">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number *</label>
+                        <input type="tel" id="phone" required placeholder="Enter your 10-digit phone number" maxlength="10">
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Delivery Address *</label>
+                        <textarea id="address" rows="3" required placeholder="Enter your complete delivery address"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="city">City *</label>
+                        <input type="text" id="city" required placeholder="Enter your city">
+                    </div>
+                    <div class="form-group">
+                        <label for="pincode">Pincode *</label>
+                        <input type="text" id="pincode" required placeholder="Enter your 6-digit pincode" maxlength="6">
+                    </div>
+                </form>
+                <button class="btn btn-primary" onclick="nextStep('step1', 'step2')">Continue to Order Summary</button>
+            </div>
+
+            <!-- Step 2: Order Summary -->
+            <div class="checkout-step" id="step2">
+                <h3>Step 2: Order Summary</h3>
+                <div class="order-summary-items" id="orderSummaryItems">
+                    <!-- Items will be displayed here -->
+                </div>
+                <div class="order-summary-totals">
+                    <div class="summary-row">
+                        <span>Subtotal:</span>
+                        <span id="summarySubtotal">₹0.00</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Discount:</span>
+                        <span id="summaryDiscount">-₹0.00</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Delivery Charge:</span>
+                        <span id="summaryDelivery">₹0.00</span>
+                    </div>
+                    <div class="summary-row total">
+                        <span>Total Amount:</span>
+                        <span id="summaryTotal">₹0.00</span>
+                    </div>
+                </div>
+                <div class="step-buttons">
+                    <button class="btn btn-secondary" onclick="previousStep('step2', 'step1')">Back</button>
+                    <button class="btn btn-primary" onclick="nextStep('step2', 'step3')">Continue to Payment</button>
+                </div>
+            </div>
+
+            <!-- Step 3: Payment Method -->
+            <div class="checkout-step" id="step3">
+                <h3>Step 3: Select Payment Method</h3>
+                <div class="payment-options">
+                    <label class="payment-option">
+                        <input type="radio" name="payment" value="cod" checked>
+                        <div class="payment-card">
+                            <span class="payment-icon">💵</span>
+                            <span class="payment-name">Cash on Delivery</span>
+                            <span class="payment-desc">Pay when your order arrives</span>
+                        </div>
+                    </label>
+                    <label class="payment-option">
+                        <input type="radio" name="payment" value="upi">
+                        <div class="payment-card">
+                            <span class="payment-icon">📱</span>
+                            <span class="payment-name">UPI</span>
+                            <span class="payment-desc">Quick and secure UPI payment</span>
+                        </div>
+                    </label>
+                    <label class="payment-option">
+                        <input type="radio" name="payment" value="card">
+                        <div class="payment-card">
+                            <span class="payment-icon">💳</span>
+                            <span class="payment-name">Debit/Credit Card</span>
+                            <span class="payment-desc">Visa, Mastercard, and other cards</span>
+                        </div>
+                    </label>
+                </div>
+                <div class="step-buttons">
+                    <button class="btn btn-secondary" onclick="previousStep('step3', 'step2')">Back</button>
+                    <button class="btn btn-primary" onclick="nextStep('step3', 'step4')">Continue to Confirmation</button>
+                </div>
+            </div>
+
+            <!-- Step 4: Order Confirmation -->
+            <div class="checkout-step" id="step4">
+                <div class="confirmation-container">
+                    <div class="success-checkmark">
+                        <div class="checkmark-circle">
+                            <svg viewBox="0 0 52 52">
+                                <circle cx="26" cy="26" r="25" fill="none"/>
+                                <path fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <h3>Order Placed Successfully! 🎉</h3>
+                    <p class="thank-you-message">Thank you for shopping with Sakshi Fruits Shop 💜</p>
+                    
+                    <div class="order-details">
+                        <div class="detail-item">
+                            <span class="detail-label">Order ID:</span>
+                            <span class="detail-value" id="orderID">#ORDER-00000</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Customer Name:</span>
+                            <span class="detail-value" id="confirmName">-</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Phone Number:</span>
+                            <span class="detail-value" id="confirmPhone">-</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Order Total:</span>
+                            <span class="detail-value" id="confirmTotal">₹0.00</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Payment Method:</span>
+                            <span class="detail-value" id="confirmPayment">-</span>
+                        </div>
+                    </div>
+
+                    <!-- Order Tracking Timeline -->
+                    <div class="tracking-timeline" style="margin: 30px 0;">
+                        <h4 style="color: var(--dark-purple); margin-bottom: 20px; text-align: center;">📦 Order Tracking</h4>
+                        <div class="tracking-step active" id="tracking-ordered">
+                            <div class="tracking-circle">✓</div>
+                            <div class="tracking-line"></div>
+                            <div class="tracking-content">
+                                <h4>Order Confirmed</h4>
+                                <p>Your order has been confirmed</p>
+                            </div>
+                        </div>
+                        <div class="tracking-step" id="tracking-packed">
+                            <div class="tracking-circle">2</div>
+                            <div class="tracking-line"></div>
+                            <div class="tracking-content">
+                                <h4>Packed</h4>
+                                <p>Your items are being packed</p>
+                            </div>
+                        </div>
+                        <div class="tracking-step" id="tracking-shipped">
+                            <div class="tracking-circle">3</div>
+                            <div class="tracking-line"></div>
+                            <div class="tracking-content">
+                                <h4>Out for Delivery</h4>
+                                <p>Your order is on the way</p>
+                            </div>
+                        </div>
+                        <div class="tracking-step" id="tracking-delivered">
+                            <div class="tracking-circle">4</div>
+                            <div class="tracking-content">
+                                <h4>Delivered</h4>
+                                <p>Expected delivery: <span id="deliveryDate">-</span></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p class="confirmation-message">
+                        Your order will be delivered within 24 hours. We'll send you a confirmation email and SMS shortly.
+                    </p>
+
+                    <div class="confirmation-buttons">
+                        <a href="index.html" class="btn btn-primary">Back to Home</a>
+                        <a href="orders.html" class="btn btn-secondary">View Order History</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h5>Sakshi Fruits Shop</h5>
+                <p>Your trusted source for fresh fruits and premium dry fruits</p>
+            </div>
+            <div class="footer-section">
+                <h5>Quick Links</h5>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="products.html">Products</a></li>
+                    <li><a href="cart.html">Cart</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h5>Contact Us</h5>
+                <p>📧 info@sakshifruitsshop.com</p>
+                <p>📱 +91-9876-543210</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Sakshi Fruits Shop. All rights reserved. 💜</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCheckoutSummary();
+            updateCartBadge();
+        });
+    </script>
+</body>
+</html>

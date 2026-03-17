@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SweetCrave - Homemade Bakery</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+}
+
+body{
+  background:#fff8f3;
+  color:#4e342e;
+}
+
+/* NAVBAR */
+nav{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:20px 60px;
+  background:white;
+  position:sticky;
+  top:0;
+  box-shadow:0 2px 10px rgba(0,0,0,0.05);
+  z-index:1000;
+}
+
+nav h2{
+  color:#d84315;
+}
+
+nav input{
+  padding:8px 15px;
+  border-radius:20px;
+  border:1px solid #ccc;
+}
+
+.cart{
+  background:#d84315;
+  color:white;
+  padding:8px 15px;
+  border-radius:20px;
+}
+
+/* HERO */
+.hero{
+  height:80vh;
+  background:url('https://images.unsplash.com/photo-1509440159596-0249088772ff') center/cover no-repeat;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  color:white;
+}
+
+.hero h1{
+  font-size:3rem;
+}
+
+.hero p{
+  margin:15px 0;
+}
+
+.hero button{
+  padding:12px 30px;
+  border:none;
+  background:#d84315;
+  color:white;
+  border-radius:30px;
+  cursor:pointer;
+}
+
+/* SECTION */
+.section{
+  padding:60px;
+  text-align:center;
+}
+
+.filters{
+  margin-bottom:30px;
+}
+
+.filters select{
+  padding:8px 15px;
+  border-radius:20px;
+  border:1px solid #ccc;
+}
+
+.products{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:30px;
+}
+
+.card{
+  background:white;
+  padding:20px;
+  border-radius:15px;
+  box-shadow:0 5px 20px rgba(0,0,0,0.05);
+  transition:0.3s;
+}
+
+.card:hover{
+  transform:translateY(-8px);
+}
+
+.card img{
+  width:100%;
+  height:220px;
+  object-fit:cover;
+  border-radius:10px;
+}
+
+.card h3{
+  margin:15px 0 5px;
+}
+
+.card button{
+  margin-top:10px;
+  padding:8px 20px;
+  border:none;
+  background:#d84315;
+  color:white;
+  border-radius:20px;
+  cursor:pointer;
+}
+
+/* FOOTER */
+footer{
+  text-align:center;
+  padding:20px;
+  background:#d84315;
+  color:white;
+  margin-top:50px;
+}
+
+@media(max-width:768px){
+  nav{
+    flex-direction:column;
+    gap:10px;
+  }
+}
+
+</style>
+</head>
+<body>
+
+<nav>
+  <h2>SweetCrave</h2>
+  <input type="text" id="search" placeholder="Search bakery items...">
+  <div class="cart">Cart (<span id="cart-count">0</span>)</div>
+</nav>
+
+<section class="hero">
+  <div>
+    <h1>Freshly Baked Happiness</h1>
+    <p>Cakes, Cookies & Chocolates Made with Love</p>
+    <button onclick="scrollToProducts()">Order Now</button>
+  </div>
+</section>
+
+<section class="section" id="products-section">
+  <h2>Our Bakery Items</h2>
+
+  <div class="filters">
+    <select id="categoryFilter">
+      <option value="All">All Categories</option>
+      <option value="Cakes">Cakes</option>
+      <option value="Cookies">Cookies</option>
+      <option value="Chocolates">Chocolates</option>
+    </select>
+  </div>
+
+  <div class="products" id="product-list"></div>
+</section>
+
+<footer>
+  <p>© 2026 SweetCrave | Homemade Bakery</p>
+</footer>
+
+<script>
+
+const products = [
+  {id:1, name:"Chocolate Cake", price:30, category:"Cakes", image:"https://images.unsplash.com/photo-1578985545062-69928b1d9587"},
+  {id:2, name:"Vanilla Cupcakes", price:15, category:"Cakes", image:"https://images.unsplash.com/photo-1599785209707-28e8b5b1a1c4"},
+  {id:3, name:"Butter Cookies", price:12, category:"Cookies", image:"https://images.unsplash.com/photo-1588195538326-c5b1e9f80a1b"},
+  {id:4, name:"Dark Chocolates", price:18, category:"Chocolates", image:"https://images.unsplash.com/photo-1606312619070-d48b4c652a52"},
+  {id:5, name:"Strawberry Cake", price:28, category:"Cakes", image:"https://images.unsplash.com/photo-1559622214-5e1b5b60e5d2"}
+];
+
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+const productList = document.getElementById("product-list");
+const cartCount = document.getElementById("cart-count");
+const searchInput = document.getElementById("search");
+const categoryFilter = document.getElementById("categoryFilter");
+
+function updateCart(){
+  cartCount.textContent = cart.length;
+  localStorage.setItem("cart", JSON.stringify(cart));
+}
+
+function displayProducts(){
+  productList.innerHTML="";
+  const searchValue = searchInput.value.toLowerCase();
+  const selectedCategory = categoryFilter.value;
+
+  products
+  .filter(p =>
+    (selectedCategory === "All" || p.category === selectedCategory) &&
+    p.name.toLowerCase().includes(searchValue)
+  )
+  .forEach(product=>{
+    const card=document.createElement("div");
+    card.classList.add("card");
+    card.innerHTML=`
+      <img src="${product.image}">
+      <h3>${product.name}</h3>
+      <p>$${product.price}</p>
+      <button onclick="addToCart(${product.id})">Add to Cart</button>
+    `;
+    productList.appendChild(card);
+  });
+}
+
+function addToCart(id){
+  const product = products.find(p=>p.id===id);
+  cart.push(product);
+  updateCart();
+  alert("Added to Cart!");
+}
+
+function scrollToProducts(){
+  document.getElementById("products-section").scrollIntoView({behavior:"smooth"});
+}
+
+searchInput.addEventListener("input", displayProducts);
+categoryFilter.addEventListener("change", displayProducts);
+
+updateCart();
+displayProducts();
+
+</script>
+
+</body>
+</html>

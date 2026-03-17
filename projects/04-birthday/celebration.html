@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Celebration — Prachu</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;600&family=Comfortaa:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body{font-family:'Fredoka',system-ui;background:linear-gradient(135deg,#ffe8f0 0%,#ffc7e0 50%,#ffb3d9 100%);color:#333}
+    .cake{width:320px;height:160px;margin:0 auto;position:relative}
+    .candles{position:absolute;left:50%;top:-28px;transform:translateX(-50%);display:flex;gap:14px}
+    .candle{width:14px;height:36px;background:#fff0f6;border-radius:6px;position:relative;display:flex;align-items:flex-start;justify-content:center;box-shadow:0 8px 12px rgba(255,107,184,0.2)}
+    .flame{width:9px;height:13px;border-radius:50%;background:radial-gradient(circle at 30% 30%,#ffeb99,#ffca28 50%,#ff9500);position:absolute;top:-14px;opacity:0;transform-origin:center bottom}
+    .candle.lit .flame{opacity:1;animation:flicker .28s infinite}
+    @keyframes flicker{0%{transform:scaleY(1)}50%{transform:scaleY(1.08)}100%{transform:scaleY(1)}}
+    .title-font{font-family:'Comfortaa',cursive;font-weight:700}
+  </style>
+  </style>
+</head>
+<body class="min-h-screen p-6">
+  <div class="max-w-3xl mx-auto">
+    <header class="flex items-center justify-between mb-6 p-4 rounded-2xl" style="background:linear-gradient(135deg,rgba(255,179,217,0.5),rgba(255,192,217,0.5));backdrop-filter:blur(8px);border:2px solid rgba(255,179,217,0.3)">
+      <h1 class="text-3xl font-bold title-font" style="color:#ff1493;text-shadow:1px 1px 3px rgba(0,0,0,0.1)">🎉 Celebration Hub 🎉</h1>
+      <nav class="space-x-3"><a href="landing.html" class="px-4 py-2 rounded-full transition" style="background:linear-gradient(90deg,#ff6bb8,#ff99cc);color:#fff;font-weight:600">Home</a><a href="memory.html" class="px-4 py-2 rounded-full transition" style="background:linear-gradient(90deg,#ff99cc,#ffb3d9);color:#fff;font-weight:600">Memory Lane</a></nav>
+    </header>
+
+    <main class="p-6 rounded-3xl text-center" style="background:linear-gradient(135deg,rgba(255,179,217,0.25),rgba(255,192,217,0.25));backdrop-filter:blur(10px);border:2px solid rgba(255,179,217,0.2)">
+      <div id="cake" class="cake">
+        <div class="candles" id="candles">
+          <div class="candle lit" data-id="1"><div class="flame"></div></div>
+          <div class="candle lit" data-id="2"><div class="flame"></div></div>
+          <div class="candle lit" data-id="3"><div class="flame"></div></div>
+          <div class="candle lit" data-id="4"><div class="flame"></div></div>
+        </div>
+        <div class="tier mt-6 rounded-3xl p-6 text-white font-bold" style="background:linear-gradient(135deg,#ffb3d9,#ffc9e0);box-shadow:0 12px 30px rgba(255,107,184,0.3)">
+          <h3 class="text-xl">✨ Make a wish, Prachu ✨</h3>
+          <p class="text-sm mt-2">Click the candles to blow them out 💨</p>
+        </div>
+      </div>
+
+      <div class="mt-8 flex items-center justify-center gap-4">
+        <button id="blowAll" class="px-6 py-3 rounded-full text-white font-bold transition shadow-lg" style="background:linear-gradient(90deg,#ff6bb8,#ff85cc)">💨 Blow Candles</button>
+        <button id="surprise" class="px-6 py-3 rounded-full text-white font-bold transition shadow-lg" style="background:linear-gradient(90deg,#ff85cc,#ffb3d9)">🎊 Surprise!</button>
+      </div>
+
+      <div id="balloon-root" class="relative h-48 mt-8 overflow-hidden"></div>
+      <div class="mt-10 text-3xl font-bold title-font" style="color:#ff1493;text-shadow:1px 1px 3px rgba(0,0,0,0.1)">💖 Best Friends Forever 💖</div>
+    </main>
+  </div>
+
+  <audio id="celebrateSound" src="https://cdn.pixabay.com/download/audio/2021/12/08/audio_1e5f0b2e1d.mp3?filename=party-horn-1-11084.mp3" preload="auto"></audio>
+  <script src="assets/js/site-multi.js"></script>
+  <script>
+    // tie candle clicks + buttons
+    document.querySelectorAll('#candles .candle').forEach(c=> c.addEventListener('click', ()=>{ c.classList.remove('lit'); confetti({particleCount:20, spread:30, origin:{y:0.6}}); }));
+    document.getElementById('blowAll').addEventListener('click', ()=>{
+      document.querySelectorAll('#candles .candle.lit').forEach((c,i)=> setTimeout(()=>{ c.classList.remove('lit'); confetti({particleCount:18, spread:28, origin:{y:0.6}}); }, i*140));
+    });
+    document.getElementById('surprise').addEventListener('click', ()=>{ document.getElementById('celebrateSound').play().catch(()=>{}); confetti({particleCount:200, spread:160, origin:{y:0.6}}); spawnBalloons(8); });
+  </script>
+</body>
+</html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Celebration — Prachu</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <h1>Celebration</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="songs.html">Songs</a>
+      <a href="celebration.html">Celebration</a>
+    </nav>
+  </header>
+
+  <main class="celebration">
+    <section class="stage">
+      <div class="cake" id="cake">
+        <div class="layer"></div>
+        <div class="candles" id="candles">
+          <span class="candle"><span class="flame"></span></span>
+          <span class="candle"><span class="flame"></span></span>
+          <span class="candle"><span class="flame"></span></span>
+        </div>
+      </div>
+
+      <div class="controls">
+        <button id="lightBtn" class="btn">Light Candles</button>
+        <button id="blowBtn" class="btn">Blow Candles</button>
+        <button id="surpriseBtn" class="btn">Surprise!</button>
+      </div>
+    </section>
+
+    <div id="balloons" class="balloons"></div>
+    <div id="confetti-root" class="confetti-root"></div>
+
+    <div id="modal" class="modal hidden">
+      <div class="modal-card">
+        <h3>Happy Birthday Prachu!</h3>
+        <p>Make a wish and enjoy 🎂🎈</p>
+        <button id="closeModal" class="btn">Close</button>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer"><a href="index.html">Back</a></footer>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart - SweetCravings</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="cart-page">
+    <header class="navbar">
+        <div class="logo">SweetCravings</div>
+        <nav class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="shop.html">Shop</a>
+            <a href="cart.html" class="cart-link">Cart (<span id="cart-count">0</span>)</a>
+            <a href="#" class="wishlist-link">Wishlist (<span id="wishlist-count">0</span>)</a>
+        </nav>
+        <div class="mobile-menu-toggle">☰</div>
+    </header>
+
+    <main class="cart-page">
+        <h1>Your Cart</h1>
+        <table class="cart-table" id="cart-table">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Price</th>
+                    <th>Qty</th>
+                    <th>Subtotal</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="cart-items"></tbody>
+        </table>
+        <div class="cart-summary">
+            <label>Coupon:</label>
+            <input type="text" id="coupon-code" placeholder="Enter code">
+            <button id="apply-coupon" class="btn secondary">Apply</button>
+            <div class="totals">
+                <div>Subtotal: $<span id="subtotal">0</span></div>
+                <div>Discount: $<span id="discount">0</span></div>
+                <div>Total: $<span id="total">0</span></div>
+            </div>
+            <button id="checkout" class="btn primary">Checkout</button>
+            <!-- order tracking -->
+            <div class="order-tracking-section">
+                <h3>Track Order</h3>
+                <input type="text" id="order-id" placeholder="Enter order ID">
+                <button id="track-btn" class="btn secondary">Track</button>
+                <div id="order-tracking"></div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div>Contact us: info@sweetcravings.com | +1 234 567 890</div>
+            <div class="social-links">
+                <a href="#">Instagram</a> | <a href="#">Facebook</a> | <a href="#">Twitter</a>
+            </div>
+        </div>
+        <p>&copy; 2026 SweetCravings. All rights reserved.</p>
+    </footer>
+
+    <script src="js/cart.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

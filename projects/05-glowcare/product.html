@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details - GlowCare</title>
+    <link rel="stylesheet" href="css/style.css?v=2">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header id="header" class="sticky">
+        <nav class="navbar">
+            <div class="logo">GlowCare</div>
+            <div class="hamburger" id="hamburger">
+                <div></div><div></div><div></div>
+            </div>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="shop.html">Shop</a></li>
+                <li><a href="quiz.html">Skin Quiz</a></li>
+                <li><a href="cart.html">Cart <span id="cart-count">0</span></a></li>
+                <li><a href="wishlist.html">Wishlist <span id="wish-count">0</span></a></li>
+            </ul>
+            <div class="toggle-mode">
+                <button id="mode-toggle">🌙</button>
+            </div>
+        </nav>
+    </header>
+
+    <section class="container" id="product-detail">
+        <!-- loaded by JS -->
+    </section>
+
+    <footer>
+        <p>&copy; 2026 GlowCare. All rights reserved.</p>
+    </footer>
+
+    <script src="js/products.js?v=2"></script>
+    <script src="js/cart.js?v=2"></script>
+    <script src="js/main.js?v=2"></script>
+    <script>
+        function getQueryParam(name){
+            const url=new URL(window.location.href);
+            return url.searchParams.get(name);
+        }
+        document.addEventListener('DOMContentLoaded',()=>{
+            const id=+getQueryParam('id');
+            const prod=products.find(p=>p.id===id);
+            window.currentProd = prod; // expose for other listeners
+            const container=document.getElementById('product-detail');
+            if(prod){
+                container.innerHTML=`
+                <div class="product-detail-card">
+                    <img src="${prod.img}" alt="${prod.name}" class="main-img">
+                    <h2>${prod.name}</h2>
+                    <p>$${prod.price.toFixed(2)}</p>
+                    <button class="add-cart" data-id="${prod.id}">Add to Cart</button>
+                    <button class="add-wish" data-id="${prod.id}">Add to Wishlist</button>
+                    <button id="suit-btn">Check if it suits your skin</button>
+                    <div class="rating" id="star-rating">
+                        ${[1,2,3,4,5].map(i=>`<span data-rating="${i}">&#9734;</span>`).join('')}
+                    </div>
+                    <h3 id="ing-toggle" style="cursor:pointer;text-decoration:underline;">Ingredients (click to expand)</h3>
+                    <p id="ing-text" style="display:none;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ingredients list here.</p>
+                    <h3>Benefits & Side Effects</h3>
+                    <p>Some benefits description. Side effects are rare.</p>
+                </div>
+                `;
+            } else {
+                container.innerHTML='<p>Product not found.</p>';
+            }
+        });
+        // star rating interaction
+        const stars=document.querySelectorAll('#star-rating span');
+        stars.forEach(s=>{
+            s.addEventListener('click',()=>{
+                const r=s.dataset.rating;
+                stars.forEach(x=> x.innerHTML='&#9734;');
+                for(let i=0;i<r;i++) stars[i].innerHTML='&#9733;';
+                if(window.currentProd) localStorage.setItem('rating-'+window.currentProd.id,r);
+            });
+        });
+        // load saved
+        if(window.currentProd){
+            const saved=localStorage.getItem('rating-'+window.currentProd.id);
+            if(saved){
+                stars.forEach(x=> x.innerHTML='&#9734;');
+                for(let i=0;i<saved;i++) stars[i].innerHTML='&#9733;';
+            }
+        }
+        document.getElementById('suit-btn').addEventListener('click',()=>{
+            const skin=prompt('Enter your skin type (Dry,Oily,Combination,Sensitive)');
+            if(skin && window.currentProd){
+                if(window.currentProd.skin==='All'||window.currentProd.skin===skin) alert('This product suits your skin!');
+                else alert('It may not be ideal for your skin.');
+            }
+        });
+        document.getElementById('ing-toggle').addEventListener('click',()=>{
+            const t=document.getElementById('ing-text');
+            t.style.display=t.style.display==='none'?'block':'none';
+        });
+    </script>
+</body>
+</html>

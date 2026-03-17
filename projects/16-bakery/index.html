@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SweetCravings – Homemade Bakery</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="home-page">
+    <header class="navbar">
+        <div class="logo">SweetCravings</div>
+        <nav class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="shop.html">Shop</a>
+            <a href="cart.html" class="cart-link">Cart (<span id="cart-count">0</span>)</a>
+            <a href="#" class="wishlist-link">Wishlist (<span id="wishlist-count">0</span>)</a>
+        </nav>
+        <div class="mobile-menu-toggle">☰</div>
+    </header>
+
+    <main>
+        <!-- Hero -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Freshly Baked Happiness</h1>
+                <p>Delicious handmade goodies delivered with love.</p>
+                <img src="images/bf41aa06c779b8e46de8c784de052b49.jpg" alt="Bakery" style="border-radius:20px;margin:20px 0;">
+                <div class="hero-buttons">
+                    <a href="shop.html" class="btn primary">Order Now</a>
+                    <a href="#customize" class="btn secondary">Customize Cake</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Products -->
+        <section class="featured">
+            <h2>Featured Delights</h2>
+            <div class="product-grid" id="featured-products"></div>
+        </section>
+
+        <!-- Best Sellers -->
+        <section class="best-sellers">
+            <h2>Best Sellers</h2>
+            <div class="product-grid" id="best-sellers"></div>
+        </section>
+
+        <!-- Testimonials -->
+        <section class="testimonials">
+            <h2>What Our Customers Say</h2>
+            <div class="testimonial-slider" id="testimonial-slider">
+                <!-- JS will populate -->
+            </div>
+        </section>
+
+        <!-- Special Offers -->
+        <section class="special-offers">
+            <h2>Special Offers</h2>
+            <p>Sign up and get 15% off your first order!</p>
+            <img src="images/image.png" alt="Special Offer" style="width:100%;border-radius:20px;margin-top:20px;">
+        </section>
+
+        <!-- Newsletter -->
+        <section class="newsletter">
+            <h2>Subscribe to our Newsletter</h2>
+            <form id="newsletter-form">
+                <input type="email" placeholder="Your email" required>
+                <button type="submit" class="btn primary">Subscribe</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div>Contact us: info@sweetcravings.com | +1 234 567 890</div>
+            <div class="social-links">
+                <a href="#">Instagram</a> | <a href="#">Facebook</a> | <a href="#">Twitter</a>
+            </div>
+        </div>
+        <p>&copy; 2026 SweetCravings. All rights reserved.</p>
+    </footer>
+
+    <script src="js/products.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

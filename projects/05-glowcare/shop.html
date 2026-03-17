@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop - GlowCare</title>
+    <link rel="stylesheet" href="css/style.css?v=2">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header id="header" class="sticky">
+        <nav class="navbar">
+            <div class="logo">GlowCare</div>
+            <div class="hamburger" id="hamburger">
+                <div></div><div></div><div></div>
+            </div>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="shop.html">Shop</a></li>
+                <li><a href="quiz.html">Skin Quiz</a></li>
+                <li><a href="cart.html">Cart <span id="cart-count">0</span></a></li>
+                <li><a href="wishlist.html">Wishlist <span id="wish-count">0</span></a></li>
+            </ul>
+            <div class="toggle-mode">
+                <button id="mode-toggle">🌙</button>
+            </div>
+        </nav>
+    </header>
+
+    <section class="container">
+        <h2>Shop Products</h2>
+        <div class="filters">
+            <select id="filter-skin">
+                <option value="All">All Skin Types</option>
+                <option value="Dry">Dry</option>
+                <option value="Oily">Oily</option>
+                <option value="Combination">Combination</option>
+                <option value="Sensitive">Sensitive</option>
+            </select>
+            <input type="range" id="filter-price" min="0" max="100" step="1">
+            <input type="text" id="search" placeholder="Search products...">
+        </div>
+        <div class="products-grid" id="shop-grid">
+            <!-- products render here -->
+        </div>
+    </section>
+
+    <!-- quick view modal -->
+    <div id="quick-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 GlowCare. All rights reserved.</p>
+    </footer>
+
+    <script src="js/products.js?v=2"></script>
+    <script src="js/cart.js?v=2"></script>
+    <script src="js/main.js?v=2"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded',()=>{
+            const grid=document.getElementById('shop-grid');
+            function refresh(){
+                const skin=document.getElementById('filter-skin').value;
+                const price=document.getElementById('filter-price').value;
+                const search=document.getElementById('search').value;
+                const list=filterProducts({skin:skin,maxPrice:price,search:search});
+                renderProductGrid(grid,list);
+            }
+            document.getElementById('filter-skin').addEventListener('change',refresh);
+            document.getElementById('filter-price').addEventListener('input',refresh);
+            document.getElementById('search').addEventListener('input',refresh);
+            refresh();
+
+            // quick view
+            document.body.addEventListener('click',e=>{
+                if(e.target.classList.contains('quick-view')){
+                    const id=+e.target.dataset.id;
+                    const prod=products.find(p=>p.id===id);
+                    const body=document.getElementById('modal-body');
+                    body.innerHTML=`<h3>${prod.name}</h3><img src="${prod.img}" style="width:100%"><p>Price $${prod.price}</p>`;
+                    document.getElementById('quick-modal').style.display='block';
+                }
+                if(e.target.classList.contains('add-cart')){
+                    addToCart(+e.target.dataset.id);
+                }
+                if(e.target.classList.contains('add-wish')){
+                    addToWish(+e.target.dataset.id);
+                }
+            });
+
+            const modal=document.getElementById('quick-modal');
+            modal.addEventListener('click',e=>{
+                if(e.target.classList.contains('close')||e.target===modal){
+                    modal.style.display='none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
