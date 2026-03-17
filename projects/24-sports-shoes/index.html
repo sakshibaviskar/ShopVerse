@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RunX - Sports Shoes Store</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body{
+    background:#f4f6f9;
+}
+
+/* NAVBAR */
+nav{
+    background:#111;
+    color:white;
+    padding:15px 8%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+nav h1{
+    color:#ff5722;
+}
+
+nav input{
+    padding:7px;
+    border:none;
+    border-radius:5px;
+}
+
+nav button{
+    padding:7px 12px;
+    border:none;
+    background:#ff5722;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+    border-radius:5px;
+}
+
+/* HERO */
+.hero{
+    height:60vh;
+    background:url('https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=1600&q=80') center/cover;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:white;
+    text-align:center;
+}
+
+.hero h2{
+    background:rgba(0,0,0,0.6);
+    padding:20px;
+    font-size:38px;
+}
+
+/* FILTER */
+.filter{
+    padding:30px 8%;
+    text-align:center;
+}
+
+.filter select{
+    padding:8px;
+    border-radius:5px;
+}
+
+/* PRODUCTS */
+.products{
+    padding:20px 8%;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:25px;
+}
+
+.card{
+    background:white;
+    border-radius:10px;
+    padding:15px;
+    text-align:center;
+    box-shadow:0 5px 15px rgba(0,0,0,0.1);
+    transition:0.3s;
+}
+
+.card:hover{
+    transform:translateY(-8px);
+}
+
+.card img{
+    width:100%;
+    height:220px;
+    object-fit:cover;
+    border-radius:10px;
+}
+
+.card h3{
+    margin:10px 0;
+}
+
+.price{
+    color:#ff5722;
+    font-weight:bold;
+}
+
+.size{
+    margin:8px 0;
+}
+
+.size select{
+    padding:5px;
+}
+
+.card button{
+    margin-top:10px;
+    padding:8px 12px;
+    border:none;
+    background:#ff5722;
+    color:white;
+    cursor:pointer;
+    border-radius:5px;
+}
+
+/* CART */
+.cart{
+    position:fixed;
+    right:-350px;
+    top:0;
+    width:320px;
+    height:100%;
+    background:white;
+    box-shadow:-5px 0 15px rgba(0,0,0,0.2);
+    padding:20px;
+    transition:0.4s;
+    overflow-y:auto;
+}
+
+.cart.active{
+    right:0;
+}
+
+.cart h2{
+    margin-bottom:15px;
+}
+
+.cart-item{
+    margin-bottom:10px;
+    border-bottom:1px solid #eee;
+    padding-bottom:5px;
+}
+
+.total{
+    font-weight:bold;
+    margin-top:15px;
+}
+
+.close{
+    background:red;
+    color:white;
+    border:none;
+    padding:5px 10px;
+    cursor:pointer;
+    float:right;
+}
+
+footer{
+    background:#111;
+    color:white;
+    text-align:center;
+    padding:20px;
+    margin-top:40px;
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+    <h1>RunX 👟</h1>
+    <div>
+        <input type="text" id="search" placeholder="Search shoes..." onkeyup="searchProduct()">
+        <button onclick="toggleCart()">Cart 🛒 (<span id="cartCount">0</span>)</button>
+    </div>
+</nav>
+
+<section class="hero">
+    <h2>Run Faster. Jump Higher. Perform Better.</h2>
+</section>
+
+<section class="filter">
+    <select onchange="filterCategory(this.value)">
+        <option value="all">All</option>
+        <option value="running">Running</option>
+        <option value="casual">Casual</option>
+        <option value="training">Training</option>
+    </select>
+</section>
+
+<section class="products" id="productList"></section>
+
+<div class="cart" id="cart">
+    <button class="close" onclick="toggleCart()">X</button>
+    <h2>Your Cart</h2>
+    <div id="cartItems"></div>
+    <div class="total">Total: ₹ <span id="totalPrice">0</span></div>
+</div>
+
+<footer>
+    © 2026 RunX Sports Shoes Store | Move With Power
+</footer>
+
+<script>
+const products = [
+    {name:"Air Zoom Runner", price:2999, category:"running", image:"https://images.unsplash.com/photo-1542291026-7eec264c27ff"},
+    {name:"Street Casual Pro", price:1999, category:"casual", image:"https://images.unsplash.com/photo-1528701800489-20be3c8f38f0"},
+    {name:"Gym Trainer X", price:2499, category:"training", image:"https://images.unsplash.com/photo-1600185365926-3a2ce3cdb9eb"},
+    {name:"Marathon Elite", price:3499, category:"running", image:"https://images.unsplash.com/photo-1606813907291-d86efa9b94db"}
+];
+
+let cart = [];
+
+function displayProducts(items){
+    const productList = document.getElementById("productList");
+    productList.innerHTML="";
+    items.forEach((product)=>{
+        productList.innerHTML += `
+        <div class="card">
+            <img src="${product.image}?auto=format&fit=crop&w=400&q=80">
+            <h3>${product.name}</h3>
+            <div class="price">₹ ${product.price}</div>
+            <div class="size">
+                Size:
+                <select>
+                    <option>6</option>
+                    <option>7</option>
+                    <option>8</option>
+                    <option>9</option>
+                    <option>10</option>
+                </select>
+            </div>
+            <button onclick="addToCart('${product.name}', ${product.price})">Add to Cart</button>
+        </div>`;
+    });
+}
+
+function addToCart(name,price){
+    cart.push({name,price});
+    updateCart();
+}
+
+function updateCart(){
+    let total=0;
+    document.getElementById("cartItems").innerHTML="";
+    cart.forEach(item=>{
+        total+=item.price;
+        document.getElementById("cartItems").innerHTML+=`
+        <div class="cart-item">
+            <div>${item.name}</div>
+            <div>₹ ${item.price}</div>
+        </div>`;
+    });
+    document.getElementById("cartCount").innerText=cart.length;
+    document.getElementById("totalPrice").innerText=total;
+}
+
+function toggleCart(){
+    document.getElementById("cart").classList.toggle("active");
+}
+
+function filterCategory(category){
+    if(category==="all"){
+        displayProducts(products);
+    } else {
+        const filtered = products.filter(p=>p.category===category);
+        displayProducts(filtered);
+    }
+}
+
+function searchProduct(){
+    const value=document.getElementById("search").value.toLowerCase();
+    const filtered=products.filter(p=>p.name.toLowerCase().includes(value));
+    displayProducts(filtered);
+}
+
+displayProducts(products);
+</script>
+
+</body>
+</html>

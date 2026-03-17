@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GreenAura - Plant Store</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body{
+    background:#f4f8f4;
+}
+
+/* NAVBAR */
+nav{
+    background:#1b5e20;
+    color:white;
+    padding:15px 8%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+nav h1{
+    letter-spacing:1px;
+}
+
+nav input{
+    padding:7px;
+    border:none;
+    border-radius:5px;
+}
+
+nav button{
+    padding:7px 12px;
+    border:none;
+    background:#a5d6a7;
+    font-weight:bold;
+    cursor:pointer;
+    border-radius:5px;
+}
+
+/* HERO */
+.hero{
+    height:60vh;
+    background:url('https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=1600&q=80') center/cover;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:white;
+    text-align:center;
+}
+
+.hero h2{
+    background:rgba(0,0,0,0.5);
+    padding:20px;
+    font-size:38px;
+}
+
+/* FILTER */
+.filter{
+    padding:30px 8%;
+    text-align:center;
+}
+
+.filter select{
+    padding:8px;
+    border-radius:5px;
+}
+
+/* PRODUCTS */
+.products{
+    padding:20px 8%;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:25px;
+}
+
+.card{
+    background:white;
+    border-radius:10px;
+    padding:15px;
+    text-align:center;
+    box-shadow:0 5px 15px rgba(0,0,0,0.1);
+    transition:0.3s;
+}
+
+.card:hover{
+    transform:translateY(-8px);
+}
+
+.card img{
+    width:100%;
+    height:220px;
+    object-fit:cover;
+    border-radius:10px;
+}
+
+.card h3{
+    margin:10px 0;
+}
+
+.card p{
+    color:#555;
+}
+
+.card button{
+    margin-top:10px;
+    padding:8px 12px;
+    border:none;
+    background:#2e7d32;
+    color:white;
+    cursor:pointer;
+    border-radius:5px;
+}
+
+/* CART */
+.cart{
+    position:fixed;
+    right:-350px;
+    top:0;
+    width:320px;
+    height:100%;
+    background:white;
+    box-shadow:-5px 0 15px rgba(0,0,0,0.2);
+    padding:20px;
+    transition:0.4s;
+    overflow-y:auto;
+}
+
+.cart.active{
+    right:0;
+}
+
+.cart h2{
+    margin-bottom:15px;
+}
+
+.cart-item{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:10px;
+}
+
+.total{
+    font-weight:bold;
+    margin-top:15px;
+}
+
+.close{
+    background:red;
+    color:white;
+    border:none;
+    padding:5px 10px;
+    cursor:pointer;
+    float:right;
+}
+
+footer{
+    background:#1b5e20;
+    color:white;
+    text-align:center;
+    padding:20px;
+    margin-top:40px;
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+    <h1>GreenAura 🌿</h1>
+    <div>
+        <input type="text" id="search" placeholder="Search plant..." onkeyup="searchPlant()">
+        <button onclick="toggleCart()">Cart 🛒 (<span id="cartCount">0</span>)</button>
+    </div>
+</nav>
+
+<section class="hero">
+    <h2>Bring Nature Inside Your Home</h2>
+</section>
+
+<section class="filter">
+    <select onchange="filterCategory(this.value)">
+        <option value="all">All Plants</option>
+        <option value="low">Low Maintenance</option>
+        <option value="air">Air Purifying</option>
+    </select>
+</section>
+
+<section class="products" id="productList"></section>
+
+<div class="cart" id="cart">
+    <button class="close" onclick="toggleCart()">X</button>
+    <h2>Your Cart</h2>
+    <div id="cartItems"></div>
+    <div class="total">Total: ₹ <span id="totalPrice">0</span></div>
+</div>
+
+<footer>
+    © 2026 GreenAura Plant Store | Fresh & Natural
+</footer>
+
+<script>
+const products = [
+    {name:"Snake Plant", price:499, category:"low", image:"https://images.unsplash.com/photo-1587300003388-59208cc962cb"},
+    {name:"Peace Lily", price:699, category:"air", image:"https://images.unsplash.com/photo-1598887142487-2e7820d6f5c9"},
+    {name:"Aloe Vera", price:399, category:"low", image:"https://images.unsplash.com/photo-1599420186946-7b3f37b7e8b1"},
+    {name:"Areca Palm", price:899, category:"air", image:"https://images.unsplash.com/photo-1509420316983-6e2e6c2f8b8e"}
+];
+
+let cart = [];
+
+function displayProducts(items){
+    const productList = document.getElementById("productList");
+    productList.innerHTML="";
+    items.forEach((product,index)=>{
+        productList.innerHTML += `
+        <div class="card">
+            <img src="${product.image}?auto=format&fit=crop&w=400&q=80">
+            <h3>${product.name}</h3>
+            <p>₹ ${product.price}</p>
+            <button onclick="addToCart(${products.indexOf(product)})">Add to Cart</button>
+        </div>`;
+    });
+}
+
+function addToCart(index){
+    cart.push(products[index]);
+    updateCart();
+}
+
+function updateCart(){
+    let total=0;
+    document.getElementById("cartItems").innerHTML="";
+    cart.forEach(item=>{
+        total+=item.price;
+        document.getElementById("cartItems").innerHTML+=`
+        <div class="cart-item">
+            <span>${item.name}</span>
+            <span>₹ ${item.price}</span>
+        </div>`;
+    });
+    document.getElementById("cartCount").innerText=cart.length;
+    document.getElementById("totalPrice").innerText=total;
+}
+
+function toggleCart(){
+    document.getElementById("cart").classList.toggle("active");
+}
+
+function filterCategory(category){
+    if(category==="all"){
+        displayProducts(products);
+    } else {
+        const filtered = products.filter(p=>p.category===category);
+        displayProducts(filtered);
+    }
+}
+
+function searchPlant(){
+    const value=document.getElementById("search").value.toLowerCase();
+    const filtered=products.filter(p=>p.name.toLowerCase().includes(value));
+    displayProducts(filtered);
+}
+
+displayProducts(products);
+</script>
+
+</body>
+</html>

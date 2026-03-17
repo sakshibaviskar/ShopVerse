@@ -1,0 +1,125 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>GlowCare - Beauty Store</title>
+<style>
+  :root { --bg: #fff; --fg: #222; --card: #fafafa; --accent: #ff6f91; --accent-2: #55b4d4; }
+  * { box-sizing: border-box; }
+  body { margin:0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: var(--fg); background: radial-gradient(circle at top, #fef9ff 0%, #f7f3ff 58%, #f1f7ff 100%); }
+  header { position: sticky; top:0; z-index: 99; background: rgba(255,255,255,0.88); backdrop-filter: blur(6px); border-bottom: 1px solid #e7e7e7; }
+  .nav-liner { max-width: 1080px; margin: auto; display: flex; align-items:center; justify-content: space-between; padding: 0.9rem 1rem; }
+  .brand { font-size: clamp(1.3rem, 2vw, 1.8rem); font-weight: 800; letter-spacing: 0.04em; color: #2a1a45; }
+  .nav-links { display:flex; gap:1rem; }
+  .nav-links a { text-decoration:none; color: #5a4b68; font-weight:600; transition:.2s; }
+  .nav-links a:hover { color: var(--accent); }
+  .theme-btn { background: var(--accent); border:none; color:#fff; border-radius:999px; padding:.45rem 0.8rem; cursor:pointer; font-weight:600; }
+  .hero { min-height: 75vh; display: grid; align-items: center; gap: 1.5rem; padding: 2rem 1rem; position: relative; overflow:hidden; }
+  .hero::after, .hero::before { content:''; position:absolute; border-radius:50%; filter: blur(60px); z-index:0; }
+  .hero::before { width:300px; height:300px; top:-80px; left:-70px; background: #ff92aa; opacity:.45; }
+  .hero::after { width:320px; height:320px; bottom:-90px; right:-80px; background: #57c6f0; opacity:.38; }
+  .hero-content { position: relative; z-index:1; max-width: 650px; }
+  .hero h1 { font-size: clamp(2.1rem, 5vw, 3.8rem); margin:.3rem 0; line-height:1.1; }
+  .hero p { font-size:1.1rem; margin:.75rem 0 1.2rem; color:#5d5470; }
+  .cta-wrap { display:flex; flex-wrap:wrap; gap:.8rem; }
+  .btn { text-decoration:none; padding:.83rem 1.35rem; border-radius:999px; font-weight:700; border:2px solid transparent; transition: transform .2s, box-shadow .2s; }
+  .btn-primary { background: linear-gradient(135deg,#f04f7f,#ff8cb6); color:#fff; }
+  .btn-secondary { background:#fff; color:#ff5f8e; border-color:#ff5f8e; }
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(85,24,83,.18); }
+  .section { max-width:1080px; margin: 1.2rem auto; background: rgba(255,255,255,.75); border-radius: 20px; box-shadow:0 18px 45px rgba(74,64,90,.12); padding:1.3rem; }
+  h2 { font-size:clamp(1.5rem, 2.2vw, 2rem); margin-bottom:.9rem; color:#2f2641; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:1rem; }
+  .card { border-radius: 14px; overflow:hidden; background:linear-gradient(145deg,#ffffff,#fcfbff); box-shadow:0 6px 20px rgba(85,64,110,.14); border: 1px solid rgba(199,180,210,.32); }
+  .card img { width:100%; aspect-ratio:1/1; object-fit:cover; display:block; }
+  .card-body { padding:.85rem; }
+  .card-body h3 { margin:.1rem 0 .4rem; font-size:1.05rem; color:#3b2952; }
+  .card-body p { margin:.2rem 0 .8rem; color:#6f6180; font-size:.96rem; }
+  .card-body .price { font-weight:800; color:#ee598f; }
+  .card-body button { width:100%; border:none; background: linear-gradient(110deg,#ff6f91,#ff8bb7); color:#fff; padding:.6rem; border-radius:.6rem; font-weight:600; cursor:pointer; } 
+  .card-body button:hover { filter: brightness(1.03); }
+  .testimonials { position:relative; }
+  .testimonial{background:#fff;margin:.35rem 0;padding:1rem;border-radius:12px;border:1px solid rgba(234,222,247,.55);}
+  .testimonial p{margin:0 0 .6rem;font-size:.96rem;color:#453f56;}
+  .testimonial cite{display:block;font-size:.87rem;color:#83718f;font-style:normal;}
+  .newsletter { display:flex; flex-wrap:wrap; gap:.75rem; justify-content:center; }
+  .newsletter input { flex:1 1 220px; padding:.72rem 1rem; border:1px solid #d6cfe2; border-radius:10px; }
+  .newsletter button { border:none; background: var(--accent-2); color:#fff; border-radius:10px; padding:.7rem 1.2rem; cursor:pointer; font-weight:700; }
+  .newsletter button:hover { opacity:.92; }
+  footer{text-align:center;padding:1rem 0; color:#695775; font-size:.9rem;}
+  @media(max-width:720px){ .nav-links{display:none;} .theme-btn{font-size:.8rem;} .hero {padding-top:1.6rem;} }
+</style>
+</head>
+<body>
+<header><div class="nav-liner"><div class="brand">GlowCare</div><nav class="nav-links"><a href="#home">Home</a><a href="#products">Products</a><a href="#reviews">Reviews</a><a href="#newsletter">Newsletter</a></nav><button class="theme-btn" id="themeSwitch">Dark</button></div></header>
+<main>
+<section id="home" class="hero">
+  <div class="hero-content">
+    <h1>Clean Beauty for Confident Skin</h1>
+    <p>Explore dermatologically tested skincare favorites, glowing routines, and fast delivery.</p>
+    <div class="cta-wrap">
+      <a class="btn btn-primary" href="#products">Shop Bestsellers</a>
+      <a class="btn btn-secondary" href="#reviews">Read Reviews</a>
+    </div>
+  </div>
+</section>
+<section id="products" class="section">
+  <h2>Best-Selling Products</h2>
+  <div class="grid" id="productGrid"></div>
+</section>
+<section id="reviews" class="section testimonials">
+  <h2>Customer Love</h2>
+  <div class="testimonial"><p>"My skin felt refreshed within 5 days. The serum is magic!"</p><cite>— Riya</cite></div>
+  <div class="testimonial"><p>"Packaging is premium, scent is fresh, and no irritation at all."</p><cite>— Anika</cite></div>
+  <div class="testimonial"><p>"Super quick delivery, excellent customer support and real results."</p><cite>— Karan</cite></div>
+</section>
+<section id="newsletter" class="section">
+  <h2>Newsletter</h2>
+  <p>Sign up for 15% off your first order plus new launches and self-care tips.</p>
+  <form class="newsletter" id="subscribeForm">
+    <input type="email" placeholder="Email address" id="email" required />
+    <button type="submit">Subscribe</button>
+  </form>
+  <p id="subMsg" style="color:#3b3050; margin-top:.6rem; font-size:.92rem;"></p>
+</section>
+</main>
+<footer>&copy; 2026 GlowCare. Crafted for radiant skin.</footer>
+<script>
+  const products = [
+    {name:'Radiance Vitamin C Serum', price:'$26', description:'Brighten skin, fade spots, and firm naturally.', image:'https://images.unsplash.com/photo-1589308078054-832f5f72e434?auto=format&fit=crop&w=800&q=80'},
+    {name:'Hydra Glow Moisturizer', price:'$34', description:'Deep hydration with lightweight finish and glow.', image:'https://images.unsplash.com/photo-1618212666228-7b7475a2967c?auto=format&fit=crop&w=800&q=80'},
+    {name:'Gentle Cleanse Foam', price:'$18', description:'Soothing cleanse for all skin types, no dryness.', image:'https://images.unsplash.com/photo-1620918271781-7a8f7408899e?auto=format&fit=crop&w=800&q=80'}
+  ];
+  const grid=document.getElementById('productGrid');
+  products.forEach(p=>{
+    const card=document.createElement('article'); card.className='card';
+    card.innerHTML=`<img src="${p.image}" alt="${p.name}" /><div class="card-body"><h3>${p.name}</h3><p>${p.description}</p><div class="price">${p.price}</div><button type="button">Add to Cart</button></div>`;
+    grid.appendChild(card);
+  });
+  document.getElementById('subscribeForm').addEventListener('submit', ev=>{
+    ev.preventDefault(); const email=document.getElementById('email').value.trim();
+    document.getElementById('subMsg').textContent = email ? 'Thanks, '+email+'! You are now subscribed.' : 'Please enter a valid email.';
+    if(email) document.getElementById('subscribeForm').reset();
+  });
+  const themeBtn=document.getElementById('themeSwitch');
+  themeBtn.addEventListener('click', ()=>{
+    document.body.classList.toggle('dark');
+    if(document.body.classList.contains('dark')){
+      document.documentElement.style.setProperty('--bg','#1a1d35');
+      document.documentElement.style.setProperty('--fg','#f4f4ff');
+      document.documentElement.style.setProperty('--card','#2a2f53');
+      document.documentElement.style.setProperty('--accent','#ff8cb6');
+      document.documentElement.style.setProperty('--accent-2','#1b8ecf');
+      themeBtn.textContent='Light';
+    } else {
+      document.documentElement.style.setProperty('--bg','#fff');
+      document.documentElement.style.setProperty('--fg','#222');
+      document.documentElement.style.setProperty('--card','#fafafa');
+      document.documentElement.style.setProperty('--accent','#ff6f91');
+      document.documentElement.style.setProperty('--accent-2','#55b4d4');
+      themeBtn.textContent='Dark';
+    }
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop - SweetCravings</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="shop-page">
+    <header class="navbar">
+        <div class="logo">SweetCravings</div>
+        <nav class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="shop.html">Shop</a>
+            <a href="cart.html" class="cart-link">Cart (<span id="cart-count">0</span>)</a>
+            <a href="#" class="wishlist-link">Wishlist (<span id="wishlist-count">0</span>)</a>
+        </nav>
+        <div class="mobile-menu-toggle">☰</div>
+    </header>
+
+    <main>
+        <section class="shop-header">
+            <h1>Our Bakery Products</h1>
+            <div class="search-bar">
+                <input type="text" id="search-input" placeholder="Search products...">
+            </div>
+        </section>
+
+        <section class="filters">
+            <div class="filter-group">
+                <h3>Categories</h3>
+                <select id="category-filter">
+                    <option value="all">All</option>
+                    <option value="birthday">Birthday Cakes</option>
+                    <option value="wedding">Wedding Cakes</option>
+                    <option value="theme">Theme Cakes</option>
+                    <option value="cupcakes">Cupcakes</option>
+                    <option value="cookies">Cookies</option>
+                    <option value="chocolates">Chocolates</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <h3>Price</h3>
+                <input type="range" id="price-filter" min="0" max="100" step="5">
+                <span id="price-value">$100</span>
+            </div>
+        </section>
+
+        <section class="product-list" id="product-list">
+            <!-- products populated by JS -->
+        </section>
+    </main>
+
+    <!-- quick view modal -->
+    <div id="quick-view-modal" class="quick-view-modal hidden">
+        <div class="modal-inner" id="quick-view-content">
+            <span class="close-quick">&times;</span>
+            <!-- populated by JS -->
+        </div>
+    </div>
+    <footer>
+        <div class="footer-content">
+            <div>Contact us: info@sweetcravings.com | +1 234 567 890</div>
+            <div class="social-links">
+                <a href="#">Instagram</a> | <a href="#">Facebook</a> | <a href="#">Twitter</a>
+            </div>
+        </div>
+        <p>&copy; 2026 SweetCravings. All rights reserved.</p>
+    </footer>
+
+    <script src="js/products.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/cart.js"></script>
+</body>
+</html>

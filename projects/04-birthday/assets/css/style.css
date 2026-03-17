@@ -1,0 +1,56 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Pacifico&display=swap');
+
+:root{
+	--bg1:#071029; --bg2:#0f1724; --card:#0b1220;
+	--accent:#ff5c8a; --accent-2:#ffb86b; --muted:#9aa6b2;
+	--glass: rgba(255,255,255,0.04);
+}
+*{box-sizing:border-box}
+body{font-family:'Poppins',Segoe UI,Arial,sans-serif;margin:0;background:linear-gradient(180deg,var(--bg1),var(--bg2));color:#e6eef6;min-height:100vh;animation:fadeIn .6s ease both}
+
+.topbar{background:linear-gradient(90deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));padding:14px 22px;display:flex;align-items:center;justify-content:space-between;backdrop-filter:blur(6px);position:sticky;top:0}
+.topbar h1{font-family:'Pacifico',cursive;color:var(--accent);font-size:1.6rem;margin:0;text-shadow:0 6px 18px rgba(0,0,0,0.6)}
+.topbar nav a{margin-left:12px;color:var(--muted);text-decoration:none;font-weight:600;padding:8px 10px;border-radius:8px;transition:all .2s}
+.topbar nav a:hover{color:#fff;background:rgba(255,255,255,0.03);transform:translateY(-2px)}
+
+.hero{padding:56px 18px;text-align:center}
+.hero h2{font-size:1.8rem;margin:0 0 6px;color:#fff}
+.big{font-size:1.2rem;color:var(--muted);margin-bottom:12px}
+
+.btn{display:inline-block;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:white;padding:12px 18px;border-radius:12px;text-decoration:none;border:none;cursor:pointer;box-shadow:0 10px 30px rgba(0,0,0,0.5);font-weight:700}
+.btn:active{transform:translateY(1px)}
+
+.container{padding:28px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+.grid img{width:100%;height:220px;object-fit:cover;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.03)}
+.footer{padding:18px 22px;text-align:center;color:var(--muted)}
+
+/* Celebration styles */
+.celebration .stage{padding:48px;text-align:center}
+.cake{margin:20px auto 10px;width:320px;position:relative}
+.cake .layer{height:110px;background:linear-gradient(180deg,#fff3f6,#ffdbe6);border-radius:18px 18px 10px 10px;box-shadow:0 10px 30px rgba(0,0,0,0.6) inset}
+.candles{position:absolute;top:-40px;left:50%;transform:translateX(-50%);display:flex;gap:20px}
+.candle{width:14px;height:34px;background:#fff6d9;border-radius:6px;position:relative;display:flex;align-items:flex-start;justify-content:center;box-shadow:0 6px 12px rgba(0,0,0,0.5)}
+.candle .flame{width:10px;height:14px;background:radial-gradient(circle at 30% 30%,#fff6a3,#ffd36b 40%,#ff7b7b);border-radius:50% 50% 50% 50%;opacity:0;transform-origin:center bottom;filter:drop-shadow(0 6px 8px rgba(255,110,120,0.2))}
+.candle.lit .flame{opacity:1;animation:flicker 300ms infinite}
+@keyframes flicker{0%{transform:translateY(0) scaleY(1)}50%{transform:translateY(-3px) scaleY(1.06)}100%{transform:translateY(0) scaleY(1)}}
+
+.controls{margin-top:18px;display:flex;gap:12px;justify-content:center}
+
+.balloons{position:fixed;left:0;right:0;bottom:0;pointer-events:none}
+.balloon{width:56px;height:72px;border-radius:50% 50% 44% 44%;position:absolute;opacity:0.98;transform-origin:center bottom;box-shadow:0 10px 30px rgba(0,0,0,0.5)}
+.balloon:after{content:"";position:absolute;left:50%;bottom:-14px;width:2px;height:22px;background:linear-gradient(#222,#444);transform:translateX(-50%)}
+
+.confetti-root{position:fixed;left:0;right:0;top:0;bottom:0;pointer-events:none}
+.confetti{width:10px;height:14px;position:absolute;opacity:0.95;border-radius:2px}
+
+.modal{position:fixed;left:0;top:0;right:0;bottom:0;display:flex;align-items:center;justify-content:center;background:rgba(3,6,12,0.6)}
+.modal.hidden{display:none}
+.modal-card{background:linear-gradient(180deg,rgba(255,255,255,0.03),rgba(255,255,255,0.02));padding:20px;border-radius:14px;max-width:360px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.6)}
+
+/* small animations */
+@keyframes floatUp{0%{transform:translateY(0) rotate(0)}50%{transform:translateY(-8px) rotate(6deg)}100%{transform:translateY(0) rotate(0)}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* responsive */
+@media (max-width:520px){.cake{width:240px}.candle{height:26px}}

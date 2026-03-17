@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Happy Birthday, Prachu!</title>
+
+  <!-- Tailwind CDN for quick prototyping -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Patrick+Hand&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+
+  <style>
+    :root{
+      --rose-gold: #b76e79; /* deep rose-gold */
+      --soft-pink: #ffd6e0;
+      --white: #fffdfd;
+      --bg: linear-gradient(180deg,#05060a 0%, #0b0f14 50%, #08111a 100%);
+      --sparkle: rgba(255,214,230,0.06);
+    }
+    html,body{height:100%}
+    body{font-family:'Poppins',system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial; background:var(--bg); color:var(--white); -webkit-font-smoothing:antialiased}
+
+    /* Title fonts */
+    .title-font{font-family:'Great Vibes',cursive}
+    .hand-font{font-family:'Patrick Hand',cursive}
+
+    /* subtle sparkles background */
+    .sparkles{position:fixed;inset:0;pointer-events:none;background-image:radial-gradient(circle at 10% 20%, rgba(255,255,255,0.02) 0 1px, transparent 1px), radial-gradient(circle at 80% 70%, rgba(255,230,240,0.02) 0 1px, transparent 1px); background-size:200px 200px, 260px 260px; z-index:0}
+
+    /* Enter button float */
+    .float-btn{transform:translateY(0);animation:float 3s ease-in-out infinite}
+    @keyframes float{0%{transform:translateY(0)}50%{transform:translateY(-10px)}100%{transform:translateY(0)}}
+
+    /* memory grid pop */
+    .pop-in{transform:translateY(10px) scale(.98);opacity:0;transition:all .6s cubic-bezier(.2,.9,.2,1)}
+    .pop-in.show{transform:none;opacity:1}
+
+    /* cake/candles */
+    .cake {width:320px;height:160px;margin:0 auto;position:relative}
+    .cake .tier{background:linear-gradient(180deg,#fff0f3,#ffdfe7);border-radius:16px;padding:18px;box-shadow:0 16px 40px rgba(0,0,0,0.6)}
+    .candles{position:absolute;left:50%;top:-28px;transform:translateX(-50%);display:flex;gap:14px}
+    .candle{width:12px;height:34px;background:#fff6d9;border-radius:6px;position:relative;display:flex;align-items:flex-start;justify-content:center;box-shadow:0 8px 18px rgba(0,0,0,0.5)}
+    .flame{width:8px;height:12px;border-radius:50%;background:radial-gradient(circle at 30% 30%,#fff6a3,#ffd36b 45%,#ff7b7b);position:absolute;top:-14px;opacity:0;transform-origin:center bottom}
+    .candle.lit .flame{opacity:1;animation:flicker .28s infinite}
+    @keyframes flicker{0%{transform:scaleY(1)}50%{transform:scaleY(1.08)}100%{transform:scaleY(1)}}
+
+    /* balloons */
+    .balloon{width:56px;height:70px;border-radius:50% 50% 44% 44%;position:absolute;opacity:0.98;transform-origin:center bottom}
+
+    /* modal small */
+    .glass{background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02)); border:1px solid rgba(255,255,255,0.04); backdrop-filter:blur(6px)}
+
+    /* responsive tweaks */
+    @media (max-width:640px){ .cake{width:240px;height:120px} }
+  </style>
+</head>
+<body class="relative overflow-x-hidden">
+  <div class="sparkles" aria-hidden></div>
+
+  <!-- Single-file 3 'pages' using sections -->
+  <main class="min-h-screen flex items-center justify-center">
+
+    <!-- Landing / Hero -->
+    <section id="page-1" class="w-full max-w-4xl p-8 md:p-12 text-center z-10">
+      <div class="mx-auto glass rounded-2xl p-8 md:p-12 shadow-2xl">
+        <h1 class="title-font text-5xl md:text-6xl text-rose-200 drop-shadow-md" style="color:var(--rose-gold)">Happy Birthday, Prachu!</h1>
+        <p id="wish" class="mt-6 text-lg md:text-xl text-rose-100 leading-relaxed max-w-2xl mx-auto"></p>
+
+        <div class="mt-8">
+          <button id="enterBtn" class="float-btn inline-flex items-center gap-3 px-6 py-3 rounded-full text-white font-semibold shadow-lg" style="background:linear-gradient(90deg,var(--rose-gold),var(--soft-pink));">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" /></svg>
+            Enter the Magic
+          </button>
+        </div>
+
+        <div class="mt-6 text-sm text-rose-200/70">
+          <div id="countdown" class="font-medium"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Memory Lane -->
+    <section id="page-2" class="hidden w-full max-w-6xl p-6 md:p-12 z-10">
+      <div class="glass rounded-2xl p-6 md:p-10">
+        <div class="flex items-center justify-between mb-6">
+          <h2 class="text-2xl md:text-3xl font-semibold" style="color:var(--soft-pink)">Memory Lane</h2>
+          <nav class="space-x-3">
+            <button id="toPage1" class="px-3 py-1 rounded-md text-sm">Back</button>
+            <button id="toPage3" class="px-3 py-1 rounded-md text-sm">Celebrate</button>
+          </nav>
+        </div>
+
+        <!-- Masonry grid using CSS columns; placeholders photo1.jpg etc. -->
+        <div id="masonry" class="columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4">
+          <!-- Repeat items with placeholders -->
+          <figure class="break-inside-avoid pop-in" style="margin:0;">
+            <img src="photo1.jpg" alt="photo 1" loading="lazy" class="w-full rounded-lg shadow-lg">
+            <figcaption class="mt-2 bg-rose-900/40 p-3 rounded-md hand-font text-rose-100">Note: That road trip day — can't forget your laugh.</figcaption>
+          </figure>
+
+          <figure class="break-inside-avoid pop-in" style="margin:0;">
+            <img src="photo2.jpg" alt="photo 2" loading="lazy" class="w-full rounded-lg shadow-lg">
+            <figcaption class="mt-2 bg-rose-900/40 p-3 rounded-md hand-font text-rose-100">Note: When we danced in the rain.</figcaption>
+          </figure>
+
+          <figure class="break-inside-avoid pop-in" style="margin:0;">
+            <img src="photo3.jpg" alt="photo 3" loading="lazy" class="w-full rounded-lg shadow-lg">
+            <figcaption class="mt-2 bg-rose-900/40 p-3 rounded-md hand-font text-rose-100">Note: Your smile that day — timeless.</figcaption>
+          </figure>
+
+          <figure class="break-inside-avoid pop-in" style="margin:0;">
+            <img src="photo4.jpg" alt="photo 4" loading="lazy" class="w-full rounded-lg shadow-lg">
+            <figcaption class="mt-2 bg-rose-900/40 p-3 rounded-md hand-font text-rose-100">Note: Late-night talks and chai.</figcaption>
+          </figure>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Celebration Hub -->
+    <section id="page-3" class="hidden w-full max-w-4xl p-6 md:p-12 z-10">
+      <div class="glass rounded-2xl p-6 md:p-10 text-center">
+        <div class="flex items-center justify-between mb-6">
+          <h2 class="text-2xl md:text-3xl font-semibold" style="color:var(--soft-pink)">Celebration Hub</h2>
+          <nav>
+            <button id="backToMem" class="px-3 py-1 rounded-md text-sm">Back</button>
+          </nav>
+        </div>
+
+        <div class="mx-auto">
+          <div class="cake" id="cake">
+            <div class="candles" id="candles">
+              <div class="candle lit" data-id="1"><div class="flame"></div></div>
+              <div class="candle lit" data-id="2"><div class="flame"></div></div>
+              <div class="candle lit" data-id="3"><div class="flame"></div></div>
+              <div class="candle lit" data-id="4"><div class="flame"></div></div>
+            </div>
+            <div class="tier mt-6 rounded-lg"> <!-- visual cake tier -->
+              <h3 class="text-xl font-semibold text-rose-900/90">Make a wish, Prachu</h3>
+              <p class="text-sm text-rose-700/80">Click the candles to blow them out</p>
+            </div>
+          </div>
+
+          <div class="mt-8 flex items-center justify-center gap-4">
+            <button id="blowAll" class="btn px-4 py-2 rounded-full text-white" style="background:linear-gradient(90deg,var(--rose-gold),var(--soft-pink))">Blow Candles</button>
+            <button id="surprise" class="btn px-4 py-2 rounded-full text-white" style="background:linear-gradient(90deg,var(--soft-pink),var(--rose-gold))">Surprise!</button>
+          </div>
+
+          <div id="balloon-root" class="relative h-48 mt-8 overflow-hidden"></div>
+
+          <div class="mt-10 text-2xl title-font text-rose-200">Best Friends Forever</div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Hidden audio players -->
+  <audio id="bgMusic" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" preload="auto" loop></audio>
+  <audio id="celebrateSound" src="https://cdn.pixabay.com/download/audio/2021/12/08/audio_1e5f0b2e1d.mp3?filename=party-horn-1-11084.mp3" preload="auto"></audio>
+
+  <script>
+    // Simple single-file app logic
+    const page1 = document.getElementById('page-1');
+    const page2 = document.getElementById('page-2');
+    const page3 = document.getElementById('page-3');
+    const enterBtn = document.getElementById('enterBtn');
+    const toPage1 = document.getElementById('toPage1');
+    const toPage3 = document.getElementById('toPage3');
+    const backToMem = document.getElementById('backToMem');
+    const blowAll = document.getElementById('blowAll');
+    const surprise = document.getElementById('surprise');
+    const candlesEl = document.getElementById('candles');
+    const bgMusic = document.getElementById('bgMusic');
+    const celebrateSound = document.getElementById('celebrateSound');
+
+    // Typewriter for two-line wish
+    const wish = document.getElementById('wish');
+    const lines = [
+      "Wishing you a night full of laughter, love and sparkling moments.",
+      "May your year ahead be as lovely and bright as you are."
+    ];
+    let lineIndex=0,charIndex=0;
+    function typeStep(){
+      if(lineIndex>=lines.length) return;
+      const target = lines[lineIndex];
+      wish.textContent = lines.slice(0,lineIndex).join('\n') + (lineIndex? '\n' : '') + target.slice(0,charIndex);
+      charIndex++;
+      if(charIndex>target.length){ lineIndex++; charIndex=0; setTimeout(typeStep,400); }
+      else setTimeout(typeStep,34 + Math.random()*10);
+    }
+    // Start slow so visitor sees it
+    setTimeout(typeStep,700);
+
+    // Countdown to Dec 24 (server time client uses local time)
+    const countdownEl = document.getElementById('countdown');
+    function updateCountdown(){
+      const now = new Date();
+      const year = now.getMonth()===11 && now.getDate()>24 ? now.getFullYear()+1 : now.getFullYear();
+      const target = new Date(year,11,24,0,0,0);
+      const diff = Math.max(0, target - now);
+      const days = Math.floor(diff/86400000); const hrs = Math.floor((diff%86400000)/3600000);
+      const mins = Math.floor((diff%3600000)/60000); const secs = Math.floor((diff%60000)/1000);
+      countdownEl.textContent = `Time until the big day: ${days}d ${hrs}h ${mins}m ${secs}s`;
+    }
+    updateCountdown(); setInterval(updateCountdown,1000);
+
+    // Page transitions with simple fade
+    function showPage(n){
+      page1.classList.add('hidden'); page2.classList.add('hidden'); page3.classList.add('hidden');
+      if(n===1) page1.classList.remove('hidden');
+      if(n===2) page2.classList.remove('hidden');
+      if(n===3) page3.classList.remove('hidden');
+      // re-trigger scroll animations if memory lane
+      if(n===2) observePopIns();
+    }
+
+    enterBtn.addEventListener('click', async ()=>{
+      // confetti burst
+      confetti({particleCount:80, spread:120, origin:{y:0.6}});
+      // try play background music on user interaction
+      bgMusic.play().catch(()=>{});
+      // transition
+      setTimeout(()=> showPage(2), 600);
+    });
+
+    toPage1 && toPage1.addEventListener('click', ()=> showPage(1));
+    toPage3 && toPage3.addEventListener('click', ()=> showPage(3));
+    backToMem && backToMem.addEventListener('click', ()=> showPage(2));
+
+    // Memory lane scroll pop using IntersectionObserver
+    let observed = false;
+    function observePopIns(){
+      if(observed) return; observed=true;
+      const items = document.querySelectorAll('.pop-in');
+      const io = new IntersectionObserver((entries)=>{
+        entries.forEach(e=>{
+          if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target); }
+        });
+      },{threshold:0.12});
+      items.forEach(i=> io.observe(i));
+    }
+
+    // Cake/candles: click candle to 'blow out' (remove lit class with small animation)
+    candlesEl.querySelectorAll('.candle').forEach(c=>{
+      c.addEventListener('click', ()=>{
+        c.classList.remove('lit');
+        // small puff confetti
+        confetti({particleCount:20, spread:30, origin:{y:0.5}});
+      });
+    });
+
+    blowAll.addEventListener('click', ()=>{
+      candlesEl.querySelectorAll('.candle.lit').forEach((c,i)=>{
+        setTimeout(()=>{ c.classList.remove('lit'); confetti({particleCount:16, spread:28, origin:{y:0.55}}); }, i*160);
+      });
+    });
+
+    // Surprise: play sound, pop balloons and confetti
+    surprise.addEventListener('click', ()=>{
+      celebrateSound.currentTime=0; celebrateSound.play().catch(()=>{});
+      // big confetti
+      confetti({particleCount:200, spread:160, origin:{y:0.6}});
+      spawnBalloons(8);
+    });
+
+    // Balloon spawning
+    const balloonRoot = document.getElementById('balloon-root');
+    function spawnBalloons(n){
+      const colors = ['#ffb6c1','#ffd6e0','#f9c7d3','#ffd9e6'];
+      for(let i=0;i<n;i++){
+        const b = document.createElement('div');
+        b.className='balloon';
+        const size = 40 + Math.random()*40; b.style.width = size+'px'; b.style.height = (size*1.25)+'px';
+        b.style.left = (10 + Math.random()*80)+'%'; b.style.bottom = '-80px';
+        b.style.background = colors[Math.floor(Math.random()*colors.length)];
+        b.style.transform = `translateX(0)`;
+        balloonRoot.appendChild(b);
+        const dur = 4000 + Math.random()*4000;
+        b.animate([{transform:'translateY(0) rotate(0deg)'},{transform:`translateY(-${400+Math.random()*300}px) rotate(${(Math.random()*40-20)}deg)`}],{duration:dur,iterations:1,easing:'ease-out'});
+        setTimeout(()=> b.remove(), dur+200);
+      }
+    }
+
+    // Type: page load show page1
+    showPage(1);
+
+    // Accessibility: keyboard Enter triggers
+    enterBtn.addEventListener('keydown', (e)=>{ if(e.key==='Enter') enterBtn.click(); });
+
+    // Optional: enable swapping photo placeholders by dragging (helpful UI) - simple drop handler
+    document.querySelectorAll('#masonry img').forEach(img=>{
+      img.addEventListener('dragover', (ev)=> ev.preventDefault());
+      img.addEventListener('drop', (ev)=>{
+        ev.preventDefault();
+        const file = ev.dataTransfer.files && ev.dataTransfer.files[0];
+        if(file && file.type.startsWith('image/')){
+          img.src = URL.createObjectURL(file);
+        }
+      });
+    });
+
+  </script>
+</body>
+</html>

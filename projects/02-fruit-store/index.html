@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sakshi Fruits Shop - Fresh Fruits & Dry Fruits Delivered with Love</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Premium Fonts from Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Poppins:wght@300;400;500;600;700&family=DM+Serif+Display&family=Great+Vibes&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-icon">🍇</span>
+                <h1>Sakshi Fruits Shop</h1>
+            </div>
+            
+            <!-- Search Bar -->
+            <div class="search-container">
+                <input type="text" class="search-input" id="searchInput" placeholder="Search fruits..." onkeyup="handleSearch(event)">
+                <div class="search-suggestions" id="searchSuggestions"></div>
+            </div>
+            
+            <div class="nav-links">
+                <a href="index.html" class="active">Home</a>
+                <a href="products.html">Shop</a>
+                <a href="wishlist.html" title="Wishlist">
+                    <span>❤️ Wishlist</span>
+                    <span class="cart-badge" id="wishlistBadge">0</span>
+                </a>
+                <a href="cart.html" class="cart-link">
+                    <span>🛒 Cart</span>
+                    <span class="cart-badge" id="cartBadge">0</span>
+                </a>
+                <button class="theme-toggle" onclick="toggleDarkMode()" title="Toggle Dark Mode">🌙</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Premium Hero Section with Collage -->
+    <section class="premium-hero">
+        <div class="hero-background">
+            <div class="gradient-orb gradient-orb-1"></div>
+            <div class="gradient-orb gradient-orb-2"></div>
+        </div>
+        
+        <div class="hero-content-premium">
+            <div class="scroll-indicator" id="scrollIndicator">
+                <span>Scroll to explore</span>
+                <div class="scroll-arrow">↓</div>
+            </div>
+
+            <div class="hero-text-section">
+                <h1 class="hero-main-title">Freshness You Can See.<br><span class="gradient-text">Quality You Can Taste.</span></h1>
+                <p class="hero-premium-subtitle">Handpicked fruits and premium dry fruits, delivered with care and love to your doorstep</p>
+                
+                <div class="hero-buttons-premium">
+                    <a href="products.html" class="btn-premium btn-primary-premium">
+                        <span>Explore Collection</span>
+                        <span class="btn-icon">🛍️</span>
+                    </a>
+                    <a href="#bestsellers" class="btn-premium btn-secondary-premium">
+                        <span>View Best Sellers</span>
+                    </a>
+                </div>
+
+                <div class="hero-trust-badges">
+                    <div class="trust-badge">
+                        <span class="badge-icon">✓</span>
+                        <span>100% Fresh</span>
+                    </div>
+                    <div class="trust-badge">
+                        <span class="badge-icon">⚡</span>
+                        <span>24h Delivery</span>
+                    </div>
+                    <div class="trust-badge">
+                        <span class="badge-icon">💜</span>
+                        <span>Premium Quality</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hero-collage">
+                <div class="collage-main">
+                    <img src="Images/fruits1.jpg" alt="Fresh fruits bowl" class="collage-img main-img">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Premium Categories Section -->
+    <section class="premium-categories">
+        <div class="section-container">
+            <div class="section-label">Our Collections</div>
+            <h2 class="section-title">Premium Selection</h2>
+            <p class="section-description">Discover our carefully curated collections of the finest fruits and dry fruits</p>
+
+            <div class="categories-grid-premium">
+                <div class="category-card-premium" data-category="fresh">
+                    <div class="category-image-container">
+                        <img src="Images/all fruits.png" alt="Fresh Fruits">
+                        <div class="category-overlay">
+                            <button class="explore-btn" onclick="window.location.href='products.html?category=fresh'">Explore →</button>
+                        </div>
+                    </div>
+                    <div class="category-info">
+                        <h3 class="category-title">🍎 Fresh Fruits</h3>
+                        <p class="category-description">Vibrant, juicy, and naturally sweet fruits</p>
+                    </div>
+                </div>
+
+                <div class="category-card-premium" data-category="dry">
+                    <div class="category-image-container">
+                        <img src="Images/all dry fruits.jpg" alt="Dry Fruits">
+                        <div class="category-overlay">
+                            <button class="explore-btn" onclick="window.location.href='products.html?category=dry'">Explore →</button>
+                        </div>
+                    </div>
+                    <div class="category-info">
+                        <h3 class="category-title">🥜 Premium Dry Fruits</h3>
+                        <p class="category-description">Nutrient-rich, premium quality dry fruits</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Best Sellers Section -->
+    <section class="best-sellers-section" id="bestsellers">
+        <div class="wave-divider"></div>
+        
+        <div class="section-container">
+            <div class="section-label">Customer Favorites</div>
+            <h2 class="section-title">Best Sellers</h2>
+            <p class="section-description">Trusted by thousands of happy customers</p>
+
+            <div class="best-sellers-grid">
+                <div class="best-seller-card">
+                    <div class="seller-rank">🥇 #1</div>
+                    <div class="seller-image">
+                        <img src="Images/apple2.jpg" alt="Red Apples">
+                        <span class="bestseller-badge">Bestseller</span>
+                    </div>
+                    <h4 class="seller-name">Red Apples</h4>
+                    <div class="seller-info">
+                        <span class="seller-rating">⭐⭐⭐⭐⭐ (4.8)</span>
+                        <span class="seller-price">₹60/kg</span>
+                    </div>
+                    <p class="seller-description">Crisp, sweet, and packed with nutrients</p>
+                    <button class="btn-add-seller" onclick="addToCartFromHome('Red Apples', 60); showToast('Added to cart!', 'success')">Add to Cart</button>
+                </div>
+
+                <div class="best-seller-card">
+                    <div class="seller-rank">🥈 #2</div>
+                    <div class="seller-image">
+                        <img src="Images/magoes.jpeg" alt="Fresh Mangoes">
+                        <span class="bestseller-badge">Bestseller</span>
+                    </div>
+                    <h4 class="seller-name">Fresh Mangoes</h4>
+                    <div class="seller-info">
+                        <span class="seller-rating">⭐⭐⭐⭐⭐ (4.9)</span>
+                        <span class="seller-price">₹80/kg</span>
+                    </div>
+                    <p class="seller-description">King of fruits, naturally sweet</p>
+                    <button class="btn-add-seller" onclick="addToCartFromHome('Fresh Mangoes', 80); showToast('Added to cart!', 'success')">Add to Cart</button>
+                </div>
+
+                <div class="best-seller-card">
+                    <div class="seller-rank">🥉 #3</div>
+                    <div class="seller-image">
+                        <img src="Images/almond.jpg" alt="Premium Almonds">
+                        <span class="bestseller-badge">Premium</span>
+                    </div>
+                    <h4 class="seller-name">Premium Almonds</h4>
+                    <div class="seller-info">
+                        <span class="seller-rating">⭐⭐⭐⭐⭐ (4.7)</span>
+                        <span class="seller-price">₹700/kg</span>
+                    </div>
+                    <p class="seller-description">Roasted & salted, perfect snack</p>
+                    <button class="btn-add-seller" onclick="addToCartFromHome('Almonds', 700); showToast('Added to cart!', 'success')">Add to Cart</button>
+                </div>
+
+                <div class="best-seller-card">
+                    <div class="seller-rank">⭐ #4</div>
+                    <div class="seller-image">
+                        <img src="Images/cashew.jpg" alt="Cashews">
+                        <span class="bestseller-badge">Premium</span>
+                    </div>
+                    <h4 class="seller-name">Premium Cashews</h4>
+                    <div class="seller-info">
+                        <span class="seller-rating">⭐⭐⭐⭐⭐ (4.8)</span>
+                        <span class="seller-price">₹800/kg</span>
+                    </div>
+                    <p class="seller-description">Buttery, crunchy, and delicious</p>
+                    <button class="btn-add-seller" onclick="addToCartFromHome('Cashews', 800); showToast('Added to cart!', 'success')">Add to Cart</button>
+                </div>
+
+                <div class="best-seller-card">
+                    <div class="seller-rank">⭐ #5</div>
+                    <div class="seller-image">
+                        <img src="Images/dates.jpg" alt="Dates">
+                        <span class="bestseller-badge">Premium</span>
+                    </div>
+                    <h4 class="seller-name">Premium Dates</h4>
+                    <div class="seller-info">
+                        <span class="seller-rating">⭐⭐⭐⭐ (4.6)</span>
+                        <span class="seller-price">₹350/kg</span>
+                    </div>
+                    <p class="seller-description">Energy-packed, naturally sweet</p>
+                    <button class="btn-add-seller" onclick="addToCartFromHome('Dates', 350); showToast('Added to cart!', 'success')">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Healthy Lifestyle Banner -->
+    <section class="lifestyle-banner">
+        <div class="lifestyle-content">
+            <div class="lifestyle-image">
+                <img src="Images/all fruits2.jpg" alt="Healthy lifestyle">
+            </div>
+            <div class="lifestyle-text">
+                <h2 class="lifestyle-title">Eat Clean. Stay Fresh. Live Healthy.</h2>
+                <p class="lifestyle-description">Our premium selection of fresh fruits and organic dry fruits is carefully chosen to support your wellness journey. Every bite is packed with nature's goodness.</p>
+                <ul class="lifestyle-benefits">
+                    <li>✓ 100% pesticide-free</li>
+                    <li>✓ Handpicked freshness</li>
+                    <li>✓ Rich in nutrients</li>
+                    <li>✓ Natural energy boost</li>
+                </ul>
+                <a href="products.html" class="btn-premium btn-primary-premium">Start Your Wellness Journey</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us Section - Premium Design -->
+    <section class="why-choose-us-premium">
+        <div class="wave-divider"></div>
+        <div class="section-container">
+            <h2 class="section-title">Why Sakshi Fruits? 💜</h2>
+            
+            <div class="benefits-grid-premium">
+                <div class="benefit-card-premium">
+                    <div class="benefit-icon-premium">🌱</div>
+                    <h4>100% Fresh & Pure</h4>
+                    <p>Handpicked from trusted farms, completely pesticide-free and naturally ripened</p>
+                </div>
+                <div class="benefit-card-premium">
+                    <div class="benefit-icon-premium">⚡</div>
+                    <h4>Lightning Fast Delivery</h4>
+                    <p>Get your order delivered within 24 hours to maintain peak freshness</p>
+                </div>
+                <div class="benefit-card-premium">
+                    <div class="benefit-icon-premium">✅</div>
+                    <h4>Quality Guaranteed</h4>
+                    <p>Every fruit and nut undergoes rigorous checks for premium quality</p>
+                </div>
+                <div class="benefit-card-premium">
+                    <div class="benefit-icon-premium">💰</div>
+                    <h4>Best Value Pricing</h4>
+                    <p>Competitive rates with exclusive discounts for regular customers</p>
+                </div>
+                <div class="benefit-card-premium">
+                    <div class="benefit-icon-premium">📦</div>
+                    <h4>Secure Packaging</h4>
+                    <p>Eco-friendly, protective packaging ensures fruits arrive in perfect condition</p>
+                </div>
+                <div class="benefit-card-premium">
+                    <div class="benefit-icon-premium">💚</div>
+                    <h4>Sustainable Practices</h4>
+                    <p>Supporting local farmers and environmental conservation efforts</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section - Premium -->
+    <section class="testimonials-premium">
+        <div class="section-container">
+            <div class="section-label">Customer Love</div>
+            <h2 class="section-title">What Our Customers Say</h2>
+            
+            <div class="testimonials-grid-premium">
+                <div class="testimonial-premium-card">
+                    <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+                    <p class="testimonial-quote">"The freshness speaks for itself! I order every week now. This is hands down the best place to get fruits online."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">👩</div>
+                        <div>
+                            <div class="author-name">Priya Sharma</div>
+                            <div class="author-city">Mumbai, India</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-premium-card">
+                    <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+                    <p class="testimonial-quote">"Premium quality dry fruits at unbeatable prices. The packaging is beautiful and protective. Highly recommended!"</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">🧑</div>
+                        <div>
+                            <div class="author-name">Rahul Patel</div>
+                            <div class="author-city">Ahmedabad, India</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-premium-card">
+                    <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+                    <p class="testimonial-quote">"Customer service is amazing! They helped me select the best combo for my family. Fruits are always fresh!"</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">👵</div>
+                        <div>
+                            <div class="author-name">Anjali Gupta</div>
+                            <div class="author-city">Delhi, India</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Premium Promotional Banner -->
+    <section class="promo-banner-premium">
+        <div class="promo-content">
+            <span class="promo-label">Limited Time Offer</span>
+            <h2 class="promo-title">Get <span class="gradient-text">20% Off</span> Your First Order</h2>
+            <p class="promo-subtitle">Experience premium freshness with Sakshi Fruits</p>
+            <div class="promo-code">
+                <span class="code-label">Use Code:</span>
+                <code class="code-value">SAKSHI20</code>
+                <button class="copy-btn" onclick="copyPromoCode()">Copy</button>
+            </div>
+            <a href="products.html" class="btn-premium btn-primary-premium btn-large">Shop Now →</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h5>Sakshi Fruits Shop</h5>
+                <p>Your trusted source for fresh fruits and premium dry fruits</p>
+            </div>
+            <div class="footer-section">
+                <h5>Quick Links</h5>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="products.html">Products</a></li>
+                    <li><a href="cart.html">Cart</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h5>Contact Us</h5>
+                <p>📧 sakshibaiskar2005@gmail.com</p>
+                <p>📱 +91-9850212737</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Sakshi Fruits Shop. All rights reserved. 💜</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Update cart badge on home page load
+        document.addEventListener('DOMContentLoaded', updateCartBadge);
+    </script>
+</body>
+</html>

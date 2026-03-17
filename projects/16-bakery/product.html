@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details - SweetCravings</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="product-page">
+    <header class="navbar">
+        <div class="logo">SweetCravings</div>
+        <nav class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="shop.html">Shop</a>
+            <a href="cart.html" class="cart-link">Cart (<span id="cart-count">0</span>)</a>
+            <a href="#" class="wishlist-link">Wishlist (<span id="wishlist-count">0</span>)</a>
+        </nav>
+        <div class="mobile-menu-toggle">☰</div>
+    </header>
+
+    <main class="product-details">
+        <div class="gallery">
+            <img id="main-image" src="" alt="">
+            <div class="thumbnails" id="thumbnails"></div>
+        </div>
+        <div class="details">
+            <h1 id="product-title"></h1>
+            <div class="rating" id="product-rating"></div>
+            <p id="product-description"></p>
+            <div class="price" id="product-price"></div>
+            <div class="quantity-selector">
+                <button id="decrease-qty">-</button>
+                <input type="number" id="quantity" value="1" min="1">
+                <button id="increase-qty">+</button>
+            </div>
+            <button id="add-to-cart" class="btn primary">Add to Cart</button>
+            <button id="customize-cake" class="btn secondary">Customize Your Cake</button>
+        </div>
+    </main>
+
+    <!-- customization modal -->
+    <div id="customization-modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Customize Your Cake</h2>
+            <form id="customization-form">
+                <label>Flavor:</label>
+                <select id="cake-flavor">
+                    <option value="chocolate">Chocolate</option>
+                    <option value="vanilla">Vanilla</option>
+                    <option value="red-velvet">Red Velvet</option>
+                </select>
+                <label>Size:</label>
+                <select id="cake-size">
+                    <option value="0.5">Half kg</option>
+                    <option value="1">1 kg</option>
+                    <option value="2">2 kg</option>
+                </select>
+                <label>Message:</label>
+                <input type="text" id="cake-message" placeholder="Happy Birthday!">
+                <label>Delivery Date:</label>
+                <input type="date" id="delivery-date" required>
+                <div class="summary" id="custom-summary"></div>
+                <button type="submit" class="btn primary">Add Customized to Cart</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div>Contact us: info@sweetcravings.com | +1 234 567 890</div>
+            <div class="social-links">
+                <a href="#">Instagram</a> | <a href="#">Facebook</a> | <a href="#">Twitter</a>
+            </div>
+        </div>
+        <p>&copy; 2026 SweetCravings. All rights reserved.</p>
+    </footer>
+
+    <script src="js/products.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

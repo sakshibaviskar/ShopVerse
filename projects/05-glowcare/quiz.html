@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skin Quiz - GlowCare</title>
+    <link rel="stylesheet" href="css/style.css?v=2">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header id="header" class="sticky">
+        <nav class="navbar">
+            <div class="logo">GlowCare</div>
+            <div class="hamburger" id="hamburger">
+                <div></div><div></div><div></div>
+            </div>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="shop.html">Shop</a></li>
+                <li><a href="quiz.html">Skin Quiz</a></li>
+                <li><a href="cart.html">Cart <span id="cart-count">0</span></a></li>
+                <li><a href="wishlist.html">Wishlist <span id="wish-count">0</span></a></li>
+            </ul>
+            <div class="toggle-mode">
+                <button id="mode-toggle">🌙</button>
+            </div>
+        </nav>
+    </header>
+
+    <section class="container">
+        <h2>Skin Type Quiz</h2>
+        <form id="quiz-form">
+            <div class="question">
+                <p>1. How does your skin feel after cleansing?</p>
+                <label><input type="radio" name="q1" value="Dry"> Tight/dry</label>
+                <label><input type="radio" name="q1" value="Oily"> Oily</label>
+                <label><input type="radio" name="q1" value="Combination"> Both</label>
+            </div>
+            <div class="question">
+                <p>2. Do you experience frequent breakouts?</p>
+                <label><input type="radio" name="q2" value="Oily"> Yes</label>
+                <label><input type="radio" name="q2" value="Dry"> No</label>
+            </div>
+            <div class="question">
+                <p>3. How visible are your pores?</p>
+                <label><input type="radio" name="q3" value="Oily"> Large</label>
+                <label><input type="radio" name="q3" value="Dry"> Small</label>
+            </div>
+            <div class="question">
+                <p>4. Does your skin often feel tight after a few hours?</p>
+                <label><input type="radio" name="q4" value="Dry"> Yes</label>
+                <label><input type="radio" name="q4" value="Oily"> No</label>
+            </div>
+            <div class="question">
+                <p>5. How often do you apply moisturizer?</p>
+                <label><input type="radio" name="q5" value="Dry"> Daily</label>
+                <label><input type="radio" name="q5" value="Oily"> Rarely</label>
+                <label><input type="radio" name="q5" value="Combination"> Sometimes</label>
+            </div>
+            <button type="submit">Get Result</button>
+        </form>
+        <div id="result"></div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 GlowCare. All rights reserved.</p>
+    </footer>
+
+    <script src="js/products.js?v=2"></script>
+    <script src="js/cart.js?v=2"></script>
+    <script src="js/main.js?v=2"></script>
+    <script>
+        document.getElementById('quiz-form').addEventListener('submit',e=>{
+            e.preventDefault();
+            const data=new FormData(e.target);
+            let score={Dry:0,Oily:0,Combination:0,Sensitive:0};
+            for(const [k,v] of data.entries()){
+                score[v]++;
+            }
+            const type=Object.keys(score).reduce((a,b)=>score[a]>score[b]?a:b);
+            const resDiv=document.getElementById('result');
+            resDiv.innerHTML=`<h3>Your skin type: ${type}</h3>`;
+            // recommendation based on skin type
+            const rec=products.filter(p=>p.skin===type||p.skin==='All');
+            if(rec.length){
+                resDiv.innerHTML+=`<p>Recommended:</p><ul>${rec.map(r=>`<li>${r.name}</li>`).join('')}</ul>`;
+            }
+        });
+    </script>
+</body>
+</html>

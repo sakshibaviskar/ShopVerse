@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PetPaws - Pet Supplies Store</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+}
+
+body{
+  background:#fff7f0;
+}
+
+/* NAVBAR */
+nav{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:20px 60px;
+  background:white;
+  position:sticky;
+  top:0;
+  box-shadow:0 2px 10px rgba(0,0,0,0.05);
+  z-index:1000;
+}
+
+nav h2{
+  color:#ff6f00;
+}
+
+nav input{
+  padding:8px 15px;
+  border-radius:20px;
+  border:1px solid #ccc;
+}
+
+.cart{
+  background:#ff6f00;
+  color:white;
+  padding:8px 15px;
+  border-radius:20px;
+}
+
+/* HERO */
+.hero{
+  height:80vh;
+  background:url('https://images.unsplash.com/photo-1558788353-f76d92427f16') center/cover no-repeat;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  color:white;
+}
+
+.hero h1{
+  font-size:3rem;
+}
+
+.hero p{
+  margin:15px 0;
+}
+
+.hero button{
+  padding:12px 30px;
+  border:none;
+  background:#ff6f00;
+  color:white;
+  border-radius:30px;
+  cursor:pointer;
+}
+
+/* SECTION */
+.section{
+  padding:60px;
+  text-align:center;
+}
+
+.filters{
+  margin-bottom:30px;
+}
+
+.filters select{
+  padding:8px 15px;
+  border-radius:20px;
+  border:1px solid #ccc;
+}
+
+.products{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:30px;
+}
+
+.card{
+  background:white;
+  padding:20px;
+  border-radius:15px;
+  box-shadow:0 5px 20px rgba(0,0,0,0.05);
+  transition:0.3s;
+}
+
+.card:hover{
+  transform:translateY(-8px);
+}
+
+.card img{
+  width:100%;
+  height:200px;
+  object-fit:cover;
+  border-radius:10px;
+}
+
+.card h3{
+  margin:15px 0 5px;
+}
+
+.card button{
+  margin-top:10px;
+  padding:8px 20px;
+  border:none;
+  background:#ff6f00;
+  color:white;
+  border-radius:20px;
+  cursor:pointer;
+}
+
+/* FOOTER */
+footer{
+  text-align:center;
+  padding:20px;
+  background:#ff6f00;
+  color:white;
+  margin-top:50px;
+}
+
+@media(max-width:768px){
+  nav{
+    flex-direction:column;
+    gap:10px;
+  }
+}
+
+</style>
+</head>
+<body>
+
+<nav>
+  <h2>PetPaws</h2>
+  <input type="text" id="search" placeholder="Search products...">
+  <div class="cart">Cart (<span id="cart-count">0</span>)</div>
+</nav>
+
+<section class="hero">
+  <div>
+    <h1>Everything Your Pet Loves</h1>
+    <p>Food, Toys & Accessories for Happy Pets</p>
+    <button onclick="scrollToProducts()">Shop Now</button>
+  </div>
+</section>
+
+<section class="section" id="products-section">
+  <h2>Our Products</h2>
+
+  <div class="filters">
+    <select id="categoryFilter">
+      <option value="All">All Categories</option>
+      <option value="Food">Pet Food</option>
+      <option value="Toys">Toys</option>
+      <option value="Accessories">Accessories</option>
+    </select>
+  </div>
+
+  <div class="products" id="product-list"></div>
+</section>
+
+<footer>
+  <p>© 2026 PetPaws | Pet Supplies Store</p>
+</footer>
+
+<script>
+
+const products = [
+  {id:1, name:"Premium Dog Food", price:25, category:"Food", image:"https://images.unsplash.com/photo-1601758003122-53c40e686a19"},
+  {id:2, name:"Cat Toy Ball", price:10, category:"Toys", image:"https://images.unsplash.com/photo-1592194996308-7b43878e84a6"},
+  {id:3, name:"Pet Leash", price:15, category:"Accessories", image:"https://images.unsplash.com/photo-1583337130417-3346a1be7dee"},
+  {id:4, name:"Dog Chew Toy", price:12, category:"Toys", image:"https://images.unsplash.com/photo-1560807707-8cc77767d783"},
+  {id:5, name:"Cat Food Pack", price:20, category:"Food", image:"https://images.unsplash.com/photo-1601758173925-196b7f4a1a41"}
+];
+
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+const productList = document.getElementById("product-list");
+const cartCount = document.getElementById("cart-count");
+const searchInput = document.getElementById("search");
+const categoryFilter = document.getElementById("categoryFilter");
+
+function updateCart(){
+  cartCount.textContent = cart.length;
+  localStorage.setItem("cart", JSON.stringify(cart));
+}
+
+function displayProducts(){
+  productList.innerHTML="";
+  const searchValue = searchInput.value.toLowerCase();
+  const selectedCategory = categoryFilter.value;
+
+  products
+  .filter(p =>
+    (selectedCategory === "All" || p.category === selectedCategory) &&
+    p.name.toLowerCase().includes(searchValue)
+  )
+  .forEach(product=>{
+    const card=document.createElement("div");
+    card.classList.add("card");
+    card.innerHTML=`
+      <img src="${product.image}">
+      <h3>${product.name}</h3>
+      <p>$${product.price}</p>
+      <button onclick="addToCart(${product.id})">Add to Cart</button>
+    `;
+    productList.appendChild(card);
+  });
+}
+
+function addToCart(id){
+  const product = products.find(p=>p.id===id);
+  cart.push(product);
+  updateCart();
+  alert("Added to Cart!");
+}
+
+function scrollToProducts(){
+  document.getElementById("products-section").scrollIntoView({behavior:"smooth"});
+}
+
+searchInput.addEventListener("input", displayProducts);
+categoryFilter.addEventListener("change", displayProducts);
+
+updateCart();
+displayProducts();
+
+</script>
+
+</body>
+</html>
