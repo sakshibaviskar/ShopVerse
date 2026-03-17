@@ -69,7 +69,7 @@ ShopVerse/
 ## 📸 Project Showcase
 
 ### 🛍️ Fashion Store
-<img src="assets/fashion.png" width="800"/>
+<img src="https://github.com/sakshibaviskar/ShopVerse/blob/main/assets/project1.png" width="800"/>
 
 ### 🍕 Food Delivery
 <img src="assets/food.png" width="800"/>
