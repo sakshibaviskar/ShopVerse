@@ -119,13 +119,4 @@ Feel free to **fork**, improve, and create a pull request 🚀
 **Sakshi Baviskar**  
 💡 *Passionate Frontend Developer*
 
----
 
-
-```
-
----
-
-<p align="center">
-  🚀 Made with ❤️ by Sakshi
-</p>
