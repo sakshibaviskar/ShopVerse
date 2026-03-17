@@ -13,7 +13,7 @@
 ---
 
 ## 🌐 Live Preview
-🚀 *Coming Soon... (Add your deployed links here)*
+🚀 https://shop-verse-ten.vercel.app/
 
 ---
 
@@ -72,10 +72,10 @@ ShopVerse/
 <img src="https://github.com/sakshibaviskar/ShopVerse/blob/main/assets/project1.png" width="800"/>
 
 ### 🍕 Food Delivery
-<img src="assets/food.png" width="800"/>
+<img src="https://github.com/sakshibaviskar/ShopVerse/blob/main/assets/16-bakery.png" width="800"/>
 
 ### 🌿 Plant Store
-<img src="assets/plant.png" width="800"/>
+<img src="https://github.com/sakshibaviskar/ShopVerse/blob/main/assets/17-plants.png"/>
 
 > ⚠️ Add your screenshots inside the `assets/` folder
 
